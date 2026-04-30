@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TA-VAT — UI Kit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ============================================================
+       DESIGN TOKENS
+       ============================================================ */
+    :root {
+      /* --- Brand colours --- */
+      --color-primary:        #0F7BA6;
+      --color-primary-dark:   #0E5673;
+      --color-primary-deep:   #264040;
+      --color-accent:         #F2D022;
+      --color-accent-dark:    #D4B400;
+
+      /* --- Neutrals --- */
+      --color-bg:             #FFFFFF;
+      --color-bg-soft:        #F2F2F2;
+      --color-bg-muted:       #E8E8E8;
+      --color-text:           #1A1A1A;
+      --color-text-secondary: #5C5C5C;
+      --color-text-muted:     #9A9A9A;
+      --color-border:         #D9D9D9;
+      --color-border-light:   #EBEBEB;
+
+      /* --- Semantic --- */
+      --color-success:        #2E9E6B;
+      --color-success-bg:     #EAF7F1;
+      --color-warning:        #E09800;
+      --color-warning-bg:     #FFF8E1;
+      --color-error:          #D94040;
+      --color-error-bg:       #FDEDED;
+      --color-info:           #0F7BA6;
+      --color-info-bg:        #E5F4FB;
+
+      /* --- Typography --- */
+      --font-family:          'Inter', sans-serif;
+      --font-size-xs:         0.75rem;    /* 12px */
+      --font-size-sm:         0.875rem;   /* 14px */
+      --font-size-base:       1rem;       /* 16px */
+      --font-size-md:         1.125rem;   /* 18px */
+      --font-size-lg:         1.25rem;    /* 20px */
+      --font-size-xl:         1.5rem;     /* 24px */
+      --font-size-2xl:        1.875rem;   /* 30px */
+      --font-size-3xl:        2.25rem;    /* 36px */
+      --font-size-4xl:        3rem;       /* 48px */
+      --line-height-tight:    1.2;
+      --line-height-snug:     1.35;
+      --line-height-base:     1.6;
+      --line-height-loose:    1.8;
+
+      /* --- Spacing --- */
+      --space-1:  0.25rem;   /* 4px */
+      --space-2:  0.5rem;    /* 8px */
+      --space-3:  0.75rem;   /* 12px */
+      --space-4:  1rem;      /* 16px */
+      --space-5:  1.25rem;   /* 20px */
+      --space-6:  1.5rem;    /* 24px */
+      --space-8:  2rem;      /* 32px */
+      --space-10: 2.5rem;    /* 40px */
+      --space-12: 3rem;      /* 48px */
+      --space-16: 4rem;      /* 64px */
+      --space-20: 5rem;      /* 80px */
+
+      /* --- Radius --- */
+      --radius-sm:   4px;
+      --radius-md:   8px;
+      --radius-lg:   12px;
+      --radius-xl:   16px;
+      --radius-2xl:  24px;
+      --radius-full: 9999px;
+
+      /* --- Shadows --- */
+      --shadow-xs:  0 1px 2px rgba(0,0,0,.06);
+      --shadow-sm:  0 2px 6px rgba(0,0,0,.08);
+      --shadow-md:  0 4px 16px rgba(0,0,0,.10);
+      --shadow-lg:  0 8px 32px rgba(0,0,0,.12);
+      --shadow-xl:  0 16px 48px rgba(0,0,0,.14);
+
+      /* --- Transitions --- */
+      --transition-fast:   150ms ease;
+      --transition-base:   250ms ease;
+      --transition-slow:   400ms ease;
+
+      /* --- Z-index --- */
+      --z-dropdown: 100;
+      --z-modal:    200;
+      --z-toast:    300;
+    }
+
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-family);
+      font-size: var(--font-size-base);
+      line-height: var(--line-height-base);
+      color: var(--color-text);
+      background: var(--color-bg);
+    }
+    a { color: var(--color-primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img, svg { display: block; max-width: 100%; }
+
+    /* ============================================================
+       UI-KIT PAGE LAYOUT
+       ============================================================ */
+    .kit-wrapper {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: var(--space-12) var(--space-6);
+    }
+    .kit-header {
+      margin-bottom: var(--space-16);
+      padding-bottom: var(--space-8);
+      border-bottom: 2px solid var(--color-border-light);
+    }
+    .kit-header h1 {
+      font-size: var(--font-size-3xl);
+      font-weight: 700;
+      color: var(--color-primary-deep);
+    }
+    .kit-header p {
+      margin-top: var(--space-2);
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-md);
+    }
+    .kit-section {
+      margin-bottom: var(--space-16);
+    }
+    .kit-section-title {
+      font-size: var(--font-size-xl);
+      font-weight: 600;
+      color: var(--color-primary-deep);
+      margin-bottom: var(--space-6);
+      padding-bottom: var(--space-3);
+      border-bottom: 1px solid var(--color-border-light);
+      letter-spacing: -.01em;
+    }
+    .kit-section-subtitle {
+      font-size: var(--font-size-base);
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      font-size: var(--font-size-xs);
+      margin: var(--space-6) 0 var(--space-3);
+    }
+    .kit-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      align-items: flex-start;
+    }
+    .kit-col {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    /* ============================================================
+       1. COLOUR PALETTE
+       ============================================================ */
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: var(--space-4);
+    }
+    .swatch {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--color-border-light);
+    }
+    .swatch-color {
+      height: 80px;
+    }
+    .swatch-info {
+      padding: var(--space-3);
+      background: var(--color-bg);
+    }
+    .swatch-name { font-size: var(--font-size-xs); font-weight: 600; color: var(--color-text); }
+    .swatch-hex  { font-size: var(--font-size-xs); color: var(--color-text-muted); font-family: monospace; margin-top: 2px; }
+
+    /* ============================================================
+       2. TYPOGRAPHY
+       ============================================================ */
+    .type-specimen + .type-specimen { margin-top: var(--space-4); }
+    .type-label {
+      display: inline-block;
+      font-family: monospace;
+      font-size: 11px;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-1);
+    }
+
+    /* ============================================================
+       3. BUTTONS
+       ============================================================ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      font-family: var(--font-family);
+      font-size: var(--font-size-base);
+      font-weight: 500;
+      line-height: 1;
+      padding: 0.75rem 1.5rem;
+      border: 2px solid transparent;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: background var(--transition-fast), color var(--transition-fast),
+                  border-color var(--transition-fast), box-shadow var(--transition-fast),
+                  transform var(--transition-fast);
+      text-decoration: none;
+      white-space: nowrap;
+      user-select: none;
+    }
+    .btn:hover  { transform: translateY(-1px); text-decoration: none; }
+    .btn:active { transform: translateY(0); }
+    .btn:focus-visible {
+      outline: 3px solid var(--color-accent);
+      outline-offset: 2px;
+    }
+
+    /* Variants */
+    .btn-primary {
+      background: var(--color-primary);
+      color: #fff;
+      border-color: var(--color-primary);
+    }
+    .btn-primary:hover { background: var(--color-primary-dark); border-color: var(--color-primary-dark); color: #fff; }
+
+    .btn-secondary {
+      background: var(--color-primary-deep);
+      color: #fff;
+      border-color: var(--color-primary-deep);
+    }
+    .btn-secondary:hover { background: #1a2e2e; border-color: #1a2e2e; color: #fff; }
+
+    .btn-accent {
+      background: var(--color-accent);
+      color: var(--color-primary-deep);
+      border-color: var(--color-accent);
+    }
+    .btn-accent:hover { background: var(--color-accent-dark); border-color: var(--color-accent-dark); color: var(--color-primary-deep); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--color-primary);
+      border-color: var(--color-primary);
+    }
+    .btn-outline:hover { background: var(--color-primary); color: #fff; }
+
+    .btn-outline-dark {
+      background: transparent;
+      color: var(--color-primary-deep);
+      border-color: var(--color-primary-deep);
+    }
+    .btn-outline-dark:hover { background: var(--color-primary-deep); color: #fff; }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--color-primary);
+      border-color: transparent;
+    }
+    .btn-ghost:hover { background: var(--color-info-bg); }
+
+    .btn-white {
+      background: #fff;
+      color: var(--color-primary-deep);
+      border-color: #fff;
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-white:hover { box-shadow: var(--shadow-md); color: var(--color-primary); }
+
+    /* Sizes */
+    .btn-sm { font-size: var(--font-size-sm); padding: 0.5rem 1rem; }
+    .btn-lg { font-size: var(--font-size-md); padding: 0.9rem 2rem; }
+    .btn-xl { font-size: var(--font-size-lg); padding: 1.1rem 2.5rem; border-radius: var(--radius-lg); }
+
+    /* States */
+    .btn-disabled, .btn:disabled {
+      opacity: .45;
+      cursor: not-allowed;
+      transform: none;
+      pointer-events: none;
+    }
+    .btn-loading { position: relative; color: transparent !important; }
+    .btn-loading::after {
+      content: '';
+      position: absolute;
+      width: 1.1em; height: 1.1em;
+      border: 2px solid rgba(255,255,255,.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Icon button */
+    .btn-icon {
+      padding: 0.75rem;
+      border-radius: var(--radius-md);
+    }
+    .btn-icon.btn-sm { padding: 0.5rem; }
+
+    /* ============================================================
+       4. FORM ELEMENTS
+       ============================================================ */
+    .form-group { display: flex; flex-direction: column; gap: var(--space-2); }
+    .form-label {
+      font-size: var(--font-size-sm);
+      font-weight: 500;
+      color: var(--color-text);
+    }
+    .form-hint {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-muted);
+    }
+    .form-error-msg {
+      font-size: var(--font-size-xs);
+      color: var(--color-error);
+    }
+
+    .input, .select, .textarea {
+      font-family: var(--font-family);
+      font-size: var(--font-size-base);
+      color: var(--color-text);
+      background: var(--color-bg);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 0.65rem 0.875rem;
+      width: 100%;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+      outline: none;
+    }
+    .input::placeholder, .textarea::placeholder { color: var(--color-text-muted); }
+    .input:hover, .select:hover, .textarea:hover { border-color: var(--color-primary); }
+    .input:focus, .select:focus, .textarea:focus {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(15,123,166,.15);
+    }
+    .input.is-error, .select.is-error, .textarea.is-error {
+      border-color: var(--color-error);
+    }
+    .input.is-error:focus, .select.is-error:focus, .textarea.is-error:focus {
+      box-shadow: 0 0 0 3px rgba(217,64,64,.15);
+    }
+    .input.is-success { border-color: var(--color-success); }
+    .input:disabled, .select:disabled, .textarea:disabled {
+      background: var(--color-bg-soft);
+      color: var(--color-text-muted);
+      cursor: not-allowed;
+    }
+    .textarea { resize: vertical; min-height: 100px; line-height: var(--line-height-base); }
+    .select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235C5C5C' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.875rem center; padding-right: 2.5rem; cursor: pointer; }
+
+    /* Checkbox & Radio */
+    .check-group { display: flex; flex-direction: column; gap: var(--space-3); }
+    .check-item { display: flex; align-items: center; gap: var(--space-3); cursor: pointer; }
+    .check-item input[type=checkbox],
+    .check-item input[type=radio] { display: none; }
+    .check-box {
+      width: 20px; height: 20px; min-width: 20px;
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background: var(--color-bg);
+      transition: border-color var(--transition-fast), background var(--transition-fast);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .check-item input:checked + .check-box {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+    }
+    .check-item input:checked + .check-box::after {
+      content: '';
+      width: 5px; height: 9px;
+      border: 2px solid #fff;
+      border-top: none; border-left: none;
+      transform: rotate(45deg) translateY(-1px);
+    }
+    .radio-box {
+      width: 20px; height: 20px; min-width: 20px;
+      border: 2px solid var(--color-border);
+      border-radius: 50%;
+      background: var(--color-bg);
+      transition: border-color var(--transition-fast);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .check-item input:checked + .radio-box {
+      border-color: var(--color-primary);
+    }
+    .check-item input:checked + .radio-box::after {
+      content: '';
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: var(--color-primary);
+    }
+    .check-label { font-size: var(--font-size-sm); color: var(--color-text); }
+
+    /* Toggle */
+    .toggle-wrap { display: flex; align-items: center; gap: var(--space-3); cursor: pointer; }
+    .toggle-track {
+      width: 44px; height: 24px;
+      background: var(--color-border);
+      border-radius: var(--radius-full);
+      position: relative;
+      transition: background var(--transition-fast);
+    }
+    .toggle-track::after {
+      content: '';
+      position: absolute;
+      top: 3px; left: 3px;
+      width: 18px; height: 18px;
+      background: #fff;
+      border-radius: 50%;
+      transition: transform var(--transition-fast);
+      box-shadow: var(--shadow-xs);
+    }
+    .toggle-input { display: none; }
+    .toggle-input:checked + .toggle-track { background: var(--color-primary); }
+    .toggle-input:checked + .toggle-track::after { transform: translateX(20px); }
+    .toggle-label { font-size: var(--font-size-sm); color: var(--color-text); }
+
+    /* ============================================================
+       5. BADGES / TAGS
+       ============================================================ */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      font-size: var(--font-size-xs);
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: var(--radius-full);
+      letter-spacing: .02em;
+    }
+    .badge-primary   { background: var(--color-info-bg);    color: var(--color-primary-dark); }
+    .badge-success   { background: var(--color-success-bg); color: var(--color-success); }
+    .badge-warning   { background: var(--color-warning-bg); color: var(--color-warning); }
+    .badge-error     { background: var(--color-error-bg);   color: var(--color-error); }
+    .badge-accent    { background: #FFF9D9;                  color: #8A6E00; }
+    .badge-dark      { background: var(--color-primary-deep); color: #fff; }
+    .badge-neutral   { background: var(--color-bg-soft);    color: var(--color-text-secondary); }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--font-size-sm);
+      font-weight: 500;
+      padding: 0.3rem 0.75rem;
+      border-radius: var(--radius-full);
+      border: 1.5px solid var(--color-border);
+      color: var(--color-text-secondary);
+      background: var(--color-bg);
+      cursor: pointer;
+      transition: border-color var(--transition-fast), color var(--transition-fast), background var(--transition-fast);
+    }
+    .tag:hover, .tag.active {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      background: var(--color-info-bg);
+    }
+
+    /* ============================================================
+       6. CARDS
+       ============================================================ */
+    .card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      box-shadow: var(--shadow-sm);
+    }
+    .card-hover {
+      transition: box-shadow var(--transition-base), transform var(--transition-base);
+      cursor: pointer;
+    }
+    .card-hover:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-3px);
+    }
+    .card-elevated { box-shadow: var(--shadow-md); border: none; }
+    .card-outlined { box-shadow: none; border: 2px solid var(--color-border); }
+    .card-filled   { background: var(--color-bg-soft); border: none; box-shadow: none; }
+    .card-accent-top { border-top: 4px solid var(--color-primary); }
+    .card-accent-left { border-left: 4px solid var(--color-accent); padding-left: calc(var(--space-6) - 4px + 1px); }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: var(--space-4);
+    }
+    .card-title {
+      font-size: var(--font-size-lg);
+      font-weight: 600;
+      color: var(--color-text);
+      line-height: var(--line-height-snug);
+    }
+    .card-subtitle {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      margin-top: var(--space-1);
+    }
+    .card-body { font-size: var(--font-size-base); color: var(--color-text-secondary); }
+    .card-footer {
+      margin-top: var(--space-5);
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--color-border-light);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    /* Service card */
+    .service-card {
+      background: var(--color-bg);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      border: 1px solid var(--color-border-light);
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow var(--transition-base), transform var(--transition-base);
+    }
+    .service-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+    .service-icon {
+      width: 52px; height: 52px;
+      border-radius: var(--radius-lg);
+      background: var(--color-info-bg);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: var(--space-5);
+    }
+    .service-icon svg { color: var(--color-primary); }
+    .service-title {
+      font-size: var(--font-size-lg);
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: var(--space-2);
+    }
+    .service-desc {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      line-height: var(--line-height-base);
+    }
+
+    /* Pricing card */
+    .pricing-card {
+      background: var(--color-bg);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      border: 2px solid var(--color-border-light);
+      transition: border-color var(--transition-base);
+      position: relative;
+    }
+    .pricing-card.featured {
+      border-color: var(--color-primary);
+      box-shadow: var(--shadow-lg);
+    }
+    .pricing-badge {
+      position: absolute;
+      top: -14px; left: 50%; transform: translateX(-50%);
+      background: var(--color-primary);
+      color: #fff;
+      font-size: var(--font-size-xs);
+      font-weight: 700;
+      padding: 4px 16px;
+      border-radius: var(--radius-full);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .pricing-name { font-size: var(--font-size-lg); font-weight: 600; margin-bottom: var(--space-4); }
+    .pricing-price { display: flex; align-items: baseline; gap: var(--space-2); margin-bottom: var(--space-5); }
+    .pricing-amount { font-size: var(--font-size-3xl); font-weight: 700; color: var(--color-primary-deep); }
+    .pricing-period { font-size: var(--font-size-sm); color: var(--color-text-muted); }
+    .pricing-list { list-style: none; display: flex; flex-direction: column; gap: var(--space-3); margin-bottom: var(--space-6); }
+    .pricing-list li {
+      display: flex; align-items: flex-start; gap: var(--space-2);
+      font-size: var(--font-size-sm); color: var(--color-text-secondary);
+    }
+    .pricing-list li::before {
+      content: '';
+      flex-shrink: 0;
+      width: 18px; height: 18px; margin-top: 1px;
+      background: var(--color-success-bg);
+      border-radius: 50%;
+      display: flex;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='8' viewBox='0 0 10 8'%3E%3Cpath d='M1 4l3 3 5-6' stroke='%232E9E6B' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    /* ============================================================
+       7. ALERTS
+       ============================================================ */
+    .alert {
+      display: flex;
+      gap: var(--space-3);
+      padding: var(--space-4);
+      border-radius: var(--radius-md);
+      font-size: var(--font-size-sm);
+      line-height: var(--line-height-base);
+      border: 1px solid transparent;
+    }
+    .alert-icon { flex-shrink: 0; width: 20px; height: 20px; }
+    .alert-info    { background: var(--color-info-bg);    color: var(--color-primary-dark); border-color: rgba(15,123,166,.2); }
+    .alert-success { background: var(--color-success-bg); color: var(--color-success); border-color: rgba(46,158,107,.2); }
+    .alert-warning { background: var(--color-warning-bg); color: var(--color-warning); border-color: rgba(224,152,0,.2); }
+    .alert-error   { background: var(--color-error-bg);   color: var(--color-error); border-color: rgba(217,64,64,.2); }
+    .alert-title   { font-weight: 600; margin-bottom: 2px; }
+
+    /* ============================================================
+       8. NAVIGATION
+       ============================================================ */
+    .nav-demo {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-sm);
+      padding: 0 var(--space-6);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .nav-logo { font-size: var(--font-size-lg); font-weight: 700; color: var(--color-primary-deep); letter-spacing: -.02em; }
+    .nav-logo span { color: var(--color-primary); }
+    .nav-links { display: flex; align-items: center; gap: var(--space-6); }
+    .nav-link {
+      font-size: var(--font-size-sm);
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+      position: relative;
+      padding-bottom: 2px;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute; bottom: -2px; left: 0; right: 0; height: 2px;
+      background: var(--color-primary);
+      border-radius: 1px;
+      transform: scaleX(0);
+      transition: transform var(--transition-fast);
+    }
+    .nav-link:hover, .nav-link.active { color: var(--color-primary); text-decoration: none; }
+    .nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
+
+    /* Dark nav variant */
+    .nav-demo.nav-dark {
+      background: var(--color-primary-deep);
+      border-color: transparent;
+    }
+    .nav-demo.nav-dark .nav-logo { color: #fff; }
+    .nav-demo.nav-dark .nav-logo span { color: var(--color-accent); }
+    .nav-demo.nav-dark .nav-link { color: rgba(255,255,255,.7); }
+    .nav-demo.nav-dark .nav-link:hover, .nav-demo.nav-dark .nav-link.active { color: #fff; }
+    .nav-demo.nav-dark .nav-link::after { background: var(--color-accent); }
+
+    /* ============================================================
+       9. HERO SECTION DEMO
+       ============================================================ */
+    .hero-demo {
+      background: linear-gradient(135deg, var(--color-primary-deep) 0%, var(--color-primary-dark) 60%, var(--color-primary) 100%);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-16) var(--space-12);
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-demo::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 360px; height: 360px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.04);
+    }
+    .hero-demo::after {
+      content: '';
+      position: absolute;
+      bottom: -120px; left: -60px;
+      width: 420px; height: 420px;
+      border-radius: 50%;
+      background: rgba(242,208,34,.06);
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      background: rgba(242,208,34,.2);
+      color: var(--color-accent);
+      font-size: var(--font-size-xs);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      margin-bottom: var(--space-5);
+    }
+    .hero-title {
+      font-size: var(--font-size-4xl);
+      font-weight: 700;
+      line-height: var(--line-height-tight);
+      max-width: 560px;
+      margin-bottom: var(--space-5);
+      letter-spacing: -.02em;
+    }
+    .hero-title span { color: var(--color-accent); }
+    .hero-desc {
+      font-size: var(--font-size-md);
+      line-height: var(--line-height-base);
+      color: rgba(255,255,255,.8);
+      max-width: 480px;
+      margin-bottom: var(--space-8);
+    }
+    .hero-cta { display: flex; gap: var(--space-4); flex-wrap: wrap; }
+
+    /* ============================================================
+       10. STATS / NUMBERS
+       ============================================================ */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: var(--space-4);
+    }
+    .stat-card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      text-align: center;
+      box-shadow: var(--shadow-xs);
+    }
+    .stat-value {
+      font-size: var(--font-size-3xl);
+      font-weight: 700;
+      color: var(--color-primary);
+      line-height: 1;
+      margin-bottom: var(--space-2);
+    }
+    .stat-label {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+    }
+
+    /* ============================================================
+       11. DIVIDERS
+       ============================================================ */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--color-border-light);
+      margin: var(--space-6) 0;
+    }
+    .divider-with-text {
+      display: flex; align-items: center; gap: var(--space-4);
+      color: var(--color-text-muted);
+      font-size: var(--font-size-sm);
+      margin: var(--space-6) 0;
+    }
+    .divider-with-text::before, .divider-with-text::after {
+      content: ''; flex: 1;
+      border-top: 1px solid var(--color-border-light);
+    }
+
+    /* ============================================================
+       12. SPINNER & SKELETON
+       ============================================================ */
+    .spinner {
+      width: 28px; height: 28px;
+      border: 3px solid var(--color-bg-muted);
+      border-top-color: var(--color-primary);
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+    }
+    .spinner-sm { width: 18px; height: 18px; border-width: 2px; }
+    .spinner-lg { width: 44px; height: 44px; border-width: 4px; }
+
+    .skeleton {
+      background: linear-gradient(90deg, var(--color-bg-soft) 25%, var(--color-bg-muted) 50%, var(--color-bg-soft) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: var(--radius-md);
+    }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    .skeleton-text  { height: 14px; }
+    .skeleton-title { height: 22px; }
+    .skeleton-img   { height: 160px; border-radius: var(--radius-lg); }
+    .skeleton-card  { height: 180px; border-radius: var(--radius-xl); }
+
+    /* ============================================================
+       13. AVATAR
+       ============================================================ */
+    .avatar {
+      display: inline-flex; align-items: center; justify-content: center;
+      border-radius: 50%;
+      font-weight: 600;
+      color: #fff;
+      overflow: hidden;
+      background: var(--color-primary);
+    }
+    .avatar-sm  { width: 32px;  height: 32px;  font-size: var(--font-size-xs); }
+    .avatar-md  { width: 44px;  height: 44px;  font-size: var(--font-size-base); }
+    .avatar-lg  { width: 60px;  height: 60px;  font-size: var(--font-size-xl); }
+    .avatar-xl  { width: 80px;  height: 80px;  font-size: var(--font-size-2xl); }
+    .avatar-dark { background: var(--color-primary-deep); }
+    .avatar-accent { background: var(--color-accent); color: var(--color-primary-deep); }
+
+    .avatar-group { display: flex; }
+    .avatar-group .avatar { border: 2px solid var(--color-bg); margin-left: -10px; }
+    .avatar-group .avatar:first-child { margin-left: 0; }
+
+    /* ============================================================
+       14. CONTACT FORM DEMO
+       ============================================================ */
+    .contact-form {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-10);
+      box-shadow: var(--shadow-md);
+      max-width: 560px;
+    }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+    @media (max-width: 560px) { .form-grid { grid-template-columns: 1fr; } }
+
+    /* ============================================================
+       15. FOOTER DEMO
+       ============================================================ */
+    .footer-demo {
+      background: var(--color-primary-deep);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-12) var(--space-10) var(--space-6);
+      color: rgba(255,255,255,.75);
+    }
+    .footer-logo { font-size: var(--font-size-xl); font-weight: 700; color: #fff; letter-spacing: -.02em; }
+    .footer-logo span { color: var(--color-accent); }
+    .footer-tagline { font-size: var(--font-size-sm); margin-top: var(--space-2); color: rgba(255,255,255,.5); }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: var(--space-10); margin-bottom: var(--space-8); }
+    @media (max-width: 640px) { .footer-grid { grid-template-columns: 1fr; } }
+    .footer-col-title { font-size: var(--font-size-sm); font-weight: 600; color: #fff; text-transform: uppercase; letter-spacing: .08em; margin-bottom: var(--space-4); }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: var(--space-2); }
+    .footer-links a { color: rgba(255,255,255,.6); font-size: var(--font-size-sm); text-decoration: none; transition: color var(--transition-fast); }
+    .footer-links a:hover { color: #fff; text-decoration: none; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.1); padding-top: var(--space-5); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-3); }
+    .footer-copy { font-size: var(--font-size-xs); color: rgba(255,255,255,.4); }
+
+    /* ============================================================
+       UTILITY HELPERS
+       ============================================================ */
+    .flex-wrap { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); }
+    @media (max-width: 720px) { .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; } }
+    .mt-2 { margin-top: var(--space-2); }
+    .mt-4 { margin-top: var(--space-4); }
+    .mt-6 { margin-top: var(--space-6); }
+    .mb-2 { margin-bottom: var(--space-2); }
+    .text-muted { color: var(--color-text-muted); font-size: var(--font-size-sm); }
+    .text-sm { font-size: var(--font-size-sm); }
+    .w-full { width: 100%; }
+  </style>
+</head>
+<body>
+<div class="kit-wrapper">
+
+  <!-- HEADER -->
+  <div class="kit-header">
+    <h1>TA-VAT · UI Kit</h1>
+    <p>Дизайн-система для сайта-визитки. Версия 1.0 · 2026</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       1. COLOUR PALETTE
+       ══════════════════════════════════════════════ -->
+  <section class="kit-section">
+    <h2 class="kit-section-title">1. Цветовая палитра</h2>
+
+    <p class="kit-section-subtitle">Основные</p>
+    <div class="palette-grid">
+      <div class="swatch"><div class="swatch-color" style="background:#0F7BA6"></div><div class="swatch-info"><div class="swatch-name">Primary</div><div class="swatch-hex">#0F7BA6</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#0E5673"></div><div class="swatch-info"><div class="swatch-name">Primary Dark</div><div class="swatch-hex">#0E5673</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#264040"></div><div class="swatch-info"><div class="swatch-name">Primary Deep</div><div class="swatch-hex">#264040</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#F2D022"></div><div class="swatch-info"><div class="swatch-name">Accent</div><div class="swatch-hex">#F2D022</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#D4B400"></div><div class="swatch-info"><div class="swatch-name">Accent Dark</div><div class="swatch-hex">#D4B400</div></div></div>
+    </div>
+
+    <p class="kit-section-subtitle" style="margin-top:var(--space-6)">Нейтральные</p>
+    <div class="palette-grid">
+      <div class="swatch"><div class="swatch-color" style="background:#1A1A1A"></div><div class="swatch-info"><div class="swatch-name">Text</div><div class="swatch-hex">#1A1A1A</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#5C5C5C"></div><div class="swatch-info"><div class="swatch-name">Text Secondary</div><div class="swatch-hex">#5C5C5C</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#9A9A9A"></div><div class="swatch-info"><div class="swatch-name">Text Muted</div><div class="swatch-hex">#9A9A9A</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#D9D9D9"></div><div class="swatch-info"><div class="swatch-name">Border</div><div class="swatch-hex">#D9D9D9</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#F2F2F2"></div><div class="swatch-info"><div class="swatch-name">BG Soft</div><div class="swatch-hex">#F2F2F2</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#FFFFFF;"></div><div class="swatch-info"><div class="swatch-name">BG White</div><div class="swatch-hex">#FFFFFF</div></div></div>
+    </div>
+
+    <p class="kit-section-subtitle" style="margin-top:var(--space-6)">Семантические</p>
+    <div class="palette-grid">
+      <div class="swatch"><div class="swatch-color" style="background:#2E9E6B"></div><div class="swatch-info"><div class="swatch-name">Success</div><div class="swatch-hex">#2E9E6B</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#E09800"></div><div class="swatch-info"><div class="swatch-name">Warning</div><div class="swatch-hex">#E09800</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#D94040"></div><div class="swatch-info"><div class="swatch-name">Error</div><div class="swatch-hex">#D94040</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#0F7BA6"></div><div class="swatch-info"><div class="swatch-name">Info</div><div class="swatch-hex">#0F7BA6</div></div></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       2. TYPOGRAPHY
+       ══════════════════════════════════════════════ -->
+  <section class="kit-section">
+    <h2 class="kit-section-title">2. Типографика · Inter</h2>
+
+    <div class="type-specimen"><span class="type-label">4xl / 48px / 700</span><div style="font-size:var(--font-size-4xl);font-weight:700;line-height:var(--line-height-tight);letter-spacing:-.02em;color:var(--color-primary-deep)">Бухгалтерский аутсорсинг</div></div>
+    <div class="type-specimen"><span class="type-label">3xl / 36px / 700</span><div style="font-size:var(--font-size-3xl);font-weight:700;line-height:var(--line-height-tight);letter-spacing:-.02em">Ваши финансы под контролем</div></div>
+    <div class="type-specimen"><span class="type-label">2xl / 30px / 600</span><div style="font-size:var(--font-size-2xl);font-weight:600;line-height:var(--line-height-snug)">Услуги TA-VAT Consulting</div></div>
+    <div class="type-specimen"><span class="type-label">xl / 24px / 600</span><div style="font-size:var(--font-size-xl);font-weight:600">Налоговая оптимизация</div></div>
+    <div class="type-specimen"><span class="type-label">lg / 20px / 500</span><div style="font-size:var(--font-size-lg);font-weight:500">Полный документооборот для ООО и ИП</div></div>
+    <div class="type-specimen"><span class="type-label">md / 18px / 400</span><div style="font-size:var(--font-size-md);font-weight:400;color:var(--color-text-secondary)">Берём на себя всю бухгалтерию, чтобы вы занимались бизнесом</div></div>
+    <div class="type-specimen"><span class="type-label">base / 16px / 400</span><div style="font-size:var(--font-size-base);color:var(--color-text-secondary)">Мы обеспечиваем трёхуровневый контроль качества и страхуем ответственность на 1 млрд сум. Работаем с компаниями любого масштаба.</div></div>
+    <div class="type-specimen"><span class="type-label">sm / 14px / 400</span><div style="font-size:var(--font-size-sm);color:var(--color-text-muted)">Пример мелкого текста · подписи · дисклеймеры · подсказки</div></div>
+    <div class="type-specimen"><span class="type-label">xs / 12px / 500</span><div style="font-size:var(--font-size-xs);font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--color-text-muted)">Label / Caption / Overline</div></div>
+
+    <hr class="divider" style="margin-top:var(--space-8)">
+
+    <div class="divider-with-text">или</div>
+
+    <p class="text-muted">Пример дивайдера с текстом и горизонтального разделителя</p>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       3. BUTTONS
+       ══════════════════════════════════════════════ -->
+  <section class="kit-section">
+    <h2 class="kit-section-title">3. Кнопки</h2>
+
+    <p class="kit-section-subtitle">Варианты</p>
+    <div class="flex-wrap">
+      <a href="#" class="btn btn-primary">Оставить заявку</a>
+      <a href="#" class="btn btn-secondary">Узнать подробнее</a>
+      <a href="#" class="btn btn-accent">Получить консультацию</a>
+      <a href="#" class="btn btn-outline">Смотреть услуги</a>
+      <a href="#" class="btn btn-outline-dark">О компании</a>
+      <a href="#" class="btn btn-ghost">Читать далее →</a>
+    </div>
+
+    <p class="kit-section-subtitle">Размеры</p>
+    <div class="flex-wrap" style="align-items:center">
+      <a href="#" class="btn btn-primary btn-sm">Маленькая</a>
+      <a href="#" class="btn btn-primary">Обычная</a>
+      <a href="#" class="btn btn-primary btn-lg">Большая</a>
+      <a href="#" class="btn btn-primary btn-xl">Очень большая</a>
+    </div>
+
+    <p class="kit-section-subtitle">Состояния</p>
+    <div class="flex-wrap">
+      <a href="#" class="btn btn-primary btn-disabled">Недоступна</a>
+      <a href="#" class="btn btn-primary btn-loading">Загрузка</a>
+      <button class="btn btn-outline" disabled>Disabled</button>
+    </div>
+
+    <p class="kit-section-subtitle">На тёмном фоне</p>
+    <div class="flex-wrap" style="background:var(--color-primary-deep);padding:var(--space-6);border-radius:var(--radius-lg)">
+      <a href="#" class="btn btn-accent">Оставить заявку</a>
+      <a href="#" class="btn btn-white">Подробнее</a>
+      <a href="#" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,.5)">Связаться</a>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       4. FORM ELEMENTS
+       ══════════════════════════════════════════════ -->
+  <section class="kit-section">
+    <h2 class="kit-section-title">4. Форма</h2>
+
+    <div class="grid-2">
+      <div class="form-group">
+        <label class="form-label">Ваше имя</label>
+        <input class="input" type="text" placeholder="Александра Толмачева" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Телефон</label>
+        <input class="input" type="tel" placeholder="+998 90 991 40 39" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email <span style="color:var(--color-error)">*</span></label>
+        <input class="input" type="email" placeholder="info@tavat.uz" />
+        <span class="form-hint">На этот адрес придёт подтверждение</span>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Тип компании</label>
+        <select class="select">
+          <option value="">Выберите...</option>
+          <option>ИП</option>
+          <option>ООО</option>
+          <option>АО</option>
+          <option>Частное лицо</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group mt-4">
+      <label class="form-label">Ваш вопрос</label>
+      <textarea class="textarea" placeholder="Опишите ваш запрос..."></textarea>
+    </div>
+
+    <p class="kit-section-subtitle">Ошибка / Успех</p>
+    <div class="grid-2">
+      <div class="form-group">
+        <label class="form-label">Email (ошибка)</label>
+        <input class="input is-error" type="email" value="invalid-email" />
+        <span class="form-error-msg">Введите корректный email</span>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email (успех)</label>
+        <input class="input is-success" type="email" value="info@tavat.uz" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Поле недоступно</label>
+        <input class="input" type="text" value="Только для чтения" disabled />
+      </div>
+    </div>
+
+    <p class="kit-section-subtitle">Чекбоксы и радио</p>
+    <div class="flex-wrap" style="gap:var(--space-8);align-items:flex-start">
+      <div class="check-group">
+        <label class="check-item">
+          <input type="checkbox" checked />
+          <span class="check-box"></span>
+          <span class="check-label">Бухгалтерский учёт</span>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" />
+          <span class="check-box"></span>
+          <span class="check-label">Налоговая отчётность</span>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" checked />
+          <span class="check-box"></span>
+          <span class="check-label">Обучение бухгалтеров</span>
+        </label>
+      </div>
+      <div class="check-group">
+        <label class="check-item">
+          <input type="radio" name="r" checked />
+          <span class="radio-box"></span>
+          <span class="check-label">До 1 млрд сум оборота</span>
+        </label>
+        <label class="check-item">
+          <input type="radio" name="r" />
+          <span class="radio-box"></span>
+          <span class="check-label">1–3 млрд сум</span>
+        </label>
+        <label class="check-item">
+          <input type="radio" name="r" />
+          <span class="radio-box"></span>
+          <span class="check-label">Свыше 3 млрд сум</span>
+        </label>
+      </div>
+      <div class="check-group">
+        <label class="toggle-wrap">
+          <input class="toggle-input" type="checkbox" id="t1" checked />
+          <span class="toggle-track"></span>
+          <span class="toggle-label">Получать уведомления</span>
+        </label>
+        <label class="toggle-wrap">
+          <input class="toggle-input" type="checkbox" id="t2" />
+          <span class="toggle-track"></span>
+          <span class="toggle-label">Подписаться на рассылку</span>
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       5. BADGES & TAGS
+       ══════════════════════════════════════════════ -->
+  <section class="kit-section">
+    <h2 class="kit-section-title">5. Бейджи и теги</h2>
+
+    <p class="kit-section-subtitle">Бейджи</p>
+    <div class="flex-wrap">
+      <span class="badge badge-primary">Информация</span>
+      <span class="badge badge-success">Активно</span>
+      <span class="badge badge-warning">На проверке</span>
+      <span class="badge badge-error">Ошибка</span>
+      <span class="badge badge-accent">Новинка</span>
+      <span class="badge badge-dark">TA-VAT</span>
+      <span class="badge badge-neutral">Черновик</span>
+    </div>
+
+    <p class="kit-section-subtitle">Теги-фильтры</p>
+    <div class="flex-wrap">
+      <span class="tag active">Все услуги</span>
+      <span class="tag">Бухгалтерия</span>
+      <span class="tag">Налоги</span>
+      <span class="tag">Обучение</span>
+      <span class="tag">ИП</span>
+      <span class="tag">ООО</span>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       6. CARDS
+       ══════════════════════════════════════════════ -->
+  <section class="kit-section">
+    <h2 class="kit-section-title">6. Карточки</h2>
+
+    <p class="kit-section-subtitle">Базовые варианты</p>
+    <div class="grid-3">
+      <div class="card card-hover">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Обычная карточка</div>
+            <div class="card-subtitle">card + card-hover</div>
+          </div>
+          <span class="badge badge-success">Активна</span>
+        </div>
+        <div class="card-body">Стандартная карточка с тенью и эффектом подъёма при наведении.</div>
+        <div class="card-footer">
+          <a href="#" class="btn btn-outline btn-sm">Подробнее</a>
+        </div>
+      </div>
+
+      <div class="card card-elevated">
+        <div class="card-header">
+          <div class="card-title">Приподнятая</div>
+        </div>
+        <div class="card-body">Карточка с более выраженной тенью, без видимой границы.</div>
+        <div class="card-footer">
+          <span class="text-muted">card-elevated</span>
+        </div>
+      </div>
+
+      <div class="card card-accent-top card-hover">
+        <div class="card-header">
+          <div class="card-title">С акцентной полосой</div>
+        </div>
+        <div class="card-body">Полоса сверху привлекает внимание и задаёт цветовой акцент.</div>
+        <div class="card-footer">
+          <span class="text-muted">card-accent-top</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="kit-section-subtitle">Карточки услуг</p>
+    <div class="grid-3">
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <div class="service-title">Бухгалтерский учёт</div>
+        <div class="service-desc">Полное ведение первичной документации, книги учёта доходов и расходов, подготовка финансовой отчётности.</div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon" style="background:rgba(242,208,34,.15)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4B400" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <div class="service-title">Налоговая отчётность</div>
+        <div class="service-desc">Расчёт и подача деклараций, оптимизация налоговой нагрузки, работа с my.soliq.uz.</div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon" style="background:rgba(46,158,107,.1)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2E9E6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="service-title">Обучение бухгалтеров</div>
+        <div class="service-desc">Курсы и наставничество для начинающих и практикующих бухгалтеров в Узбекистане.</div>
+      </div>
+    </div>
+
+    <p class="kit-section-subtitle">Тарифные карточки</p>
+    <div class="grid-3">
+      <div class="pricing-card">
+        <div class="pricing-name">Старт</div>
+        <div class="pricing-price">
+          <div class="pricing-amount">1 271 000</div>
+          <div class="pricing-period">сум / мес</div>
+        </div>
+        <ul class="pricing-list">
+          <li>До 1 млрд сум оборота</li>
+          <li>ИП на упрощёнке</li>
+          <li>Ежеквартальная отчётность</li>
+          <li>Чат с бухгалтером</li>
+        </ul>
+        <a href="#" class="btn btn-outline w-full">Выбрать план</a>
+      </div>
+
+      <div class="pricing-card featured">
+        <div class="pricing-badge">Популярный</div>
+        <div class="pricing-name">Бизнес</div>
+        <div class="pricing-price">
+          <div class="pricing-amount">3 800 000</div>
+          <div class="pricing-period">сум / мес</div>
+        </div>
+        <ul class="pricing-list">
+          <li>До 3 млрд сум оборота</li>
+          <li>ООО / АО</li>
+          <li>Ежемесячная отчётность</li>
+          <li>Личный бухгалтер</li>
+          <li>Страховка 1 млрд сум</li>
+        </ul>
+        <a href="#" class="btn btn-primary w-full">Выбрать план</a>
+      </div>
+
+      <div class="pricing-card">
+        <div class="pricing-name">Премиум</div>
+        <div class="pricing-price">
+          <div class="pricing-amount">7 626 000</div>
+          <div class="pricing-period">сум / мес</div>
+        </div>
+        <ul class="pricing-list">
+          <li>Свыше 3 млрд сум</li>
+          <li>Любая форма компании</li>
+          <li>Еженедельный контроль</li>
+          <li>Команда из 3 специалистов</li>
+          <li>Налоговая оптимизация</li>
+        </ul>
+        <a href="#" class="btn btn-outline w-full">Выбрать план</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       7. ALERTS
+       ══════════════════════════════════════════════ -->
+  <section class="kit-section">
+    <h2 class="kit-section-title">7. Алерты и уведомления</h2>
+    <div class="kit-col" style="gap:var(--space-3);max-width:640px">
+      <div class="alert alert-info">
+        <svg class="alert-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
+        <div><div class="alert-title">Информация</div>Ваша заявка принята и передана менеджеру. Ожидайте звонка в течение 2 часов.</div>
+      </div>
+      <div class="alert alert-success">
+        <svg class="alert-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+        <div><div class="alert-title">Успешно отправлено</div>Ваше сообщение получено. Мы свяжемся с вами в ближайшее время.</div>
+      </div>
+      <div class="alert alert-warning">
+        <svg class="alert-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+        <div><div class="alert-title">Срок сдачи отчётности</div>Напоминаем: квартальная декларация должна быть подана до 25 числа.</div>
+      </div>
+      <div class="alert alert-error">
+        <svg class="alert-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>
+        <div><div class="alert-title">Ошибка</div>Не удалось отправить форму. Проверьте заполненные поля и попробуйте снова.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       8. NAVIGATION
+       ══════════════════════════════════════════════ -->
+  <section class="kit-section">
+    <h2 class="kit-section-title">8. Навигация</h2>
+
+    <p class="kit-section-subtitle">Светлая</p>
+    <div class="nav-demo">
+      <div class="nav-logo">TA<span>-VAT</span></div>
+      <div class="nav-links">
+        <a href="#" class="nav-link active">Главная</a>
+        <a href="#" class="nav-link">Услуги</a>
+        <a href="#" class="nav-link">Тарифы</a>
+        <a href="#" class="nav-link">О нас</a>
+        <a href="#" class="nav-link">Контакты</a>
+      </div>
+      <a href="#" class="btn btn-primary btn-sm">Оставить заявку</a>
+    </div>
+
+    <p class="kit-section-subtitle">Тёмная</p>
+    <div class="nav-demo nav-dark">
+      <div class="nav-logo">TA<span>-VAT</span></div>
+      <div class="nav-links">
+        <a href="#" class="nav-link active">Главная</a>
+        <a href="#" class="nav-link">Услуги</a>
+        <a href="#" class="nav-link">Тарифы</a>
+        <a href="#" class="nav-link">О нас</a>
+        <a href="#" class="nav-link">Контакты</a>
+      </div>
+      <a href="#" class="btn btn-accent btn-sm">Оставить заявку</a>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       9. HERO SECTION
+       ══════════════════════════════════════════════ -->
+  <section class="kit-section">
+    <h2 class="kit-section-title">9. Hero секция</h2>
+    <div class="hero-demo">
+      <div class="hero-eyebrow">Бухгалтерия · Налоги · Ташкент</div>
+      <h1 class="hero-title">Ваши финансы под <span>надёжной защитой</span></h1>
+      <p class="hero-desc">TA-VAT — бухгалтерский и налоговый аутсорсинг для предпринимателей и компаний в Узбекистане. Услуги застрахованы на 1 млрд сум.</p>
+      <div class="hero-cta">
+        <a href="#" class="btn btn-accent btn-lg">Получить консультацию</a>
+        <a href="#" class="btn btn-white btn-lg">Узнать тарифы</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       10. STATS
+       ══════════════════════════════════════════════ -->
+  <section class="kit-section">
+    <h2 class="kit-section-title">10. Статистика</h2>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-value">15+</div><div class="stat-label">специалистов в команде</div></div>
+      <div class="stat-card"><div class="stat-value">200+</div><div class="stat-label">клиентов за всё время</div></div>
+      <div class="stat-card"><div class="stat-value">5 лет</div><div class="stat-label">на рынке Узбекистана</div></div>
+      <div class="stat-card"><div class="stat-value" style="font-size:var(--font-size-2xl)">1 млрд</div><div class="stat-label">страховое покрытие (сум)</div></div>
+      <div class="stat-card"><div class="stat-value">3</div><div class="stat-label">уровня контроля качества</div></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       11. AVATARS
+       ══════════════════════════════════════════════ -->
+  <section class="kit-section">
+    <h2 class="kit-section-title">11. Аватары</h2>
+    <div class="flex-wrap" style="align-items:center">
+      <div class="avatar avatar-sm">АТ</div>
+      <div class="avatar avatar-md">АТ</div>
+      <div class="avatar avatar-lg">АТ</div>
+      <div class="avatar avatar-xl">АТ</div>
+      <div class="avatar avatar-md avatar-dark">МИ</div>
+      <div class="avatar avatar-md avatar-accent">ТА</div>
+    </div>
+    <p class="kit-section-subtitle">Группа аватаров</p>
+    <div class="avatar-group">
+      <div class="avatar avatar-md">АТ</div>
+      <div class="avatar avatar-md avatar-dark">МИ</div>
+      <div class="avatar avatar-md avatar-accent">ТА</div>
+      <div class="avatar avatar-md" style="background:var(--color-primary-dark)">+5</div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       12. LOADERS & SKELETON
+       ══════════════════════════════════════════════ -->
+  <section class="kit-section">
+    <h2 class="kit-section-title">12. Загрузка и скелетоны</h2>
+
+    <p class="kit-section-subtitle">Спиннеры</p>
+    <div class="flex-wrap" style="align-items:center">
+      <div class="spinner spinner-sm"></div>
+      <div class="spinner"></div>
+      <div class="spinner spinner-lg"></div>
+    </div>
+
+    <p class="kit-section-subtitle">Скелетон-карточка</p>
+    <div class="grid-3">
+      <div class="card" style="gap:var(--space-3);display:flex;flex-direction:column">
+        <div class="skeleton skeleton-img"></div>
+        <div class="skeleton skeleton-title" style="width:70%"></div>
+        <div class="skeleton skeleton-text"></div>
+        <div class="skeleton skeleton-text" style="width:85%"></div>
+        <div class="skeleton skeleton-text" style="width:50%"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       13. CONTACT FORM DEMO
+       ══════════════════════════════════════════════ -->
+  <section class="kit-section">
+    <h2 class="kit-section-title">13. Пример: форма обратной связи</h2>
+    <div class="contact-form">
+      <h3 style="font-size:var(--font-size-xl);font-weight:700;margin-bottom:var(--space-2)">Оставить заявку</h3>
+      <p style="font-size:var(--font-size-sm);color:var(--color-text-secondary);margin-bottom:var(--space-6)">Ответим в течение 2 часов в рабочее время</p>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Имя <span style="color:var(--color-error)">*</span></label>
+          <input class="input" type="text" placeholder="Ваше имя" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Телефон <span style="color:var(--color-error)">*</span></label>
+          <input class="input" type="tel" placeholder="+998 __ ___ __ __" />
+        </div>
+      </div>
+      <div class="form-group mt-4">
+        <label class="form-label">Email</label>
+        <input class="input" type="email" placeholder="example@mail.com" />
+      </div>
+      <div class="form-group mt-4">
+        <label class="form-label">Тип компании</label>
+        <select class="select">
+          <option value="">Выберите тип...</option>
+          <option>ИП</option>
+          <option>ООО</option>
+          <option>АО</option>
+        </select>
+      </div>
+      <div class="form-group mt-4">
+        <label class="form-label">Сообщение</label>
+        <textarea class="textarea" placeholder="Кратко опишите ваш запрос..."></textarea>
+      </div>
+      <div class="mt-4">
+        <label class="check-item">
+          <input type="checkbox" checked />
+          <span class="check-box"></span>
+          <span class="check-label" style="font-size:var(--font-size-xs);color:var(--color-text-muted)">Я согласен с <a href="#">политикой конфиденциальности</a></span>
+        </label>
+      </div>
+      <a href="#" class="btn btn-primary w-full mt-6" style="justify-content:center">Отправить заявку</a>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       14. FOOTER DEMO
+       ══════════════════════════════════════════════ -->
+  <section class="kit-section">
+    <h2 class="kit-section-title">14. Подвал сайта</h2>
+    <div class="footer-demo">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo">TA<span>-VAT</span></div>
+          <div class="footer-tagline">Бухгалтерия и налоги. Ташкент, Узбекистан</div>
+          <p style="font-size:var(--font-size-sm);margin-top:var(--space-4);color:rgba(255,255,255,.5);max-width:280px;line-height:var(--line-height-base)">Профессиональный аутсорсинг для предпринимателей и компаний. Услуги застрахованы на 1 млрд сум.</p>
+        </div>
+        <div>
+          <div class="footer-col-title">Услуги</div>
+          <ul class="footer-links">
+            <li><a href="#">Бухгалтерский учёт</a></li>
+            <li><a href="#">Налоговая отчётность</a></li>
+            <li><a href="#">Оптимизация налогов</a></li>
+            <li><a href="#">Обучение бухгалтеров</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Контакты</div>
+          <ul class="footer-links">
+            <li><a href="tel:+998909914039">+998 90 991 40 39</a></li>
+            <li><a href="mailto:info@tavat.uz">info@tavat.uz</a></li>
+            <li><a href="#">Telegram</a></li>
+            <li><a href="#">Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copy">© 2026 TA-VAT Consulting. Все права защищены.</div>
+        <div class="footer-copy">Ташкент, Узбекистан</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

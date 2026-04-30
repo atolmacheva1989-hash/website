@@ -1,0 +1,1742 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TA-VAT Consulting — Бухгалтерский аутсорсинг в Узбекистане</title>
+  <meta name="description" content="TA-VAT — профессиональный бухгалтерский и налоговый аутсорсинг для предпринимателей и компаний в Узбекистане. Услуги застрахованы на 1 млрд сум." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ============================================================
+       DESIGN TOKENS
+       ============================================================ */
+    :root {
+      --color-primary:        #0F7BA6;
+      --color-primary-dark:   #0E5673;
+      --color-primary-deep:   #264040;
+      --color-accent:         #F2D022;
+      --color-accent-dark:    #D4B400;
+
+      --color-bg:             #FFFFFF;
+      --color-bg-soft:        #F2F2F2;
+      --color-bg-muted:       #E8E8E8;
+      --color-text:           #1A1A1A;
+      --color-text-secondary: #5C5C5C;
+      --color-text-muted:     #9A9A9A;
+      --color-border:         #D9D9D9;
+      --color-border-light:   #EBEBEB;
+
+      --color-success:        #2E9E6B;
+      --color-success-bg:     #EAF7F1;
+
+      --font-family: 'Inter', sans-serif;
+
+      --radius-sm:   4px;
+      --radius-md:   8px;
+      --radius-lg:   12px;
+      --radius-xl:   16px;
+      --radius-2xl:  24px;
+      --radius-full: 9999px;
+
+      --shadow-xs:  0 1px 2px rgba(0,0,0,.06);
+      --shadow-sm:  0 2px 6px rgba(0,0,0,.08);
+      --shadow-md:  0 4px 16px rgba(0,0,0,.10);
+      --shadow-lg:  0 8px 32px rgba(0,0,0,.12);
+      --shadow-xl:  0 16px 48px rgba(0,0,0,.14);
+
+      --transition: 250ms ease;
+      --transition-fast: 150ms ease;
+
+      --container: 1160px;
+      --nav-h: 72px;
+    }
+
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-family);
+      color: var(--color-text);
+      background: var(--color-bg);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    img { display: block; max-width: 100%; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+    /* ============================================================
+       LAYOUT
+       ============================================================ */
+    .container {
+      width: 100%;
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    section { scroll-margin-top: var(--nav-h); }
+
+    /* ============================================================
+       COMPONENTS
+       ============================================================ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: var(--font-family);
+      font-weight: 500;
+      font-size: 1rem;
+      line-height: 1;
+      padding: 0.8rem 1.6rem;
+      border-radius: var(--radius-md);
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: background var(--transition-fast), color var(--transition-fast),
+                  border-color var(--transition-fast), box-shadow var(--transition-fast),
+                  transform var(--transition-fast);
+      white-space: nowrap;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+    .btn:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 2px; }
+
+    .btn-primary { background: var(--color-primary); color: #fff; border-color: var(--color-primary); }
+    .btn-primary:hover { background: var(--color-primary-dark); border-color: var(--color-primary-dark); }
+
+    .btn-accent { background: var(--color-accent); color: var(--color-primary-deep); border-color: var(--color-accent); font-weight: 600; }
+    .btn-accent:hover { background: var(--color-accent-dark); border-color: var(--color-accent-dark); }
+
+    .btn-outline { background: transparent; color: var(--color-primary); border-color: var(--color-primary); }
+    .btn-outline:hover { background: var(--color-primary); color: #fff; }
+
+    .btn-outline-white { background: transparent; color: #fff; border-color: rgba(255,255,255,.5); }
+    .btn-outline-white:hover { background: rgba(255,255,255,.12); border-color: #fff; }
+
+    .btn-white { background: #fff; color: var(--color-primary-deep); border-color: #fff; }
+    .btn-white:hover { box-shadow: var(--shadow-md); }
+
+    .btn-lg { font-size: 1.0625rem; padding: 0.9rem 2rem; }
+    .btn-sm { font-size: 0.875rem; padding: 0.55rem 1.1rem; }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.75rem; font-weight: 700;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      text-transform: uppercase; letter-spacing: .06em;
+    }
+    .badge-accent { background: rgba(242,208,34,.18); color: #8A6E00; }
+    .badge-primary { background: rgba(15,123,166,.12); color: var(--color-primary-dark); }
+    .badge-light { background: rgba(255,255,255,.15); color: rgba(255,255,255,.9); }
+
+    .section-eyebrow {
+      display: inline-block;
+      font-size: 0.75rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .1em;
+      color: var(--color-primary);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -.02em;
+      color: var(--color-primary-deep);
+    }
+    .section-title span { color: var(--color-primary); }
+    .section-desc {
+      font-size: 1.0625rem;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      max-width: 560px;
+    }
+    .section-header { margin-bottom: 56px; }
+    .section-header.center { text-align: center; }
+    .section-header.center .section-desc { margin: 12px auto 0; }
+
+    /* ============================================================
+       NAV
+       ============================================================ */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: var(--nav-h);
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border-light);
+      transition: box-shadow var(--transition);
+    }
+    .nav.scrolled { box-shadow: var(--shadow-md); }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: var(--nav-h);
+      gap: 32px;
+    }
+    .nav-logo {
+      font-size: 1.375rem;
+      font-weight: 800;
+      color: var(--color-primary-deep);
+      letter-spacing: -.03em;
+      flex-shrink: 0;
+    }
+    .nav-logo span { color: var(--color-primary); }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .nav-link {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      transition: color var(--transition-fast);
+      position: relative;
+      padding-bottom: 3px;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--color-primary);
+      border-radius: 1px;
+      transform: scaleX(0);
+      transition: transform var(--transition-fast);
+    }
+    .nav-link:hover, .nav-link.active { color: var(--color-primary); }
+    .nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
+    .nav-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+    .nav-phone {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--color-primary-deep);
+    }
+    .nav-phone:hover { color: var(--color-primary); }
+
+    /* Mobile burger */
+    .burger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      padding: 6px;
+      cursor: pointer;
+    }
+    .burger span {
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--color-primary-deep);
+      border-radius: 2px;
+      transition: transform var(--transition), opacity var(--transition);
+    }
+    .burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .burger.open span:nth-child(2) { opacity: 0; }
+    .burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: var(--nav-h); left: 0; right: 0;
+      background: var(--color-bg);
+      border-bottom: 1px solid var(--color-border-light);
+      box-shadow: var(--shadow-lg);
+      z-index: 99;
+      padding: 20px 24px 24px;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu .nav-link {
+      font-size: 1.0625rem;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--color-border-light);
+    }
+    .mobile-menu .nav-link:last-of-type { border-bottom: none; }
+    .mobile-menu .btn { margin-top: 12px; width: 100%; justify-content: center; }
+
+    /* ============================================================
+       HERO
+       ============================================================ */
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      background: linear-gradient(135deg, var(--color-primary-deep) 0%, var(--color-primary-dark) 55%, var(--color-primary) 100%);
+      padding: calc(var(--nav-h) + 40px) 0 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -120px; right: -120px;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(242,208,34,.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -160px; left: -80px;
+      width: 520px; height: 520px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(242,208,34,.18);
+      color: var(--color-accent);
+      font-size: 0.75rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .1em;
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      margin-bottom: 24px;
+    }
+    .hero-title {
+      font-size: clamp(2.25rem, 5vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -.03em;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+    .hero-title span { color: var(--color-accent); }
+    .hero-desc {
+      font-size: 1.125rem;
+      color: rgba(255,255,255,.78);
+      line-height: 1.7;
+      margin-bottom: 36px;
+      max-width: 480px;
+    }
+    .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
+    .hero-trust {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-top: 44px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,.12);
+    }
+    .hero-trust-item { text-align: center; }
+    .hero-trust-value {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--color-accent);
+      line-height: 1;
+    }
+    .hero-trust-label {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,.55);
+      margin-top: 4px;
+      line-height: 1.3;
+    }
+    .hero-trust-sep { width: 1px; height: 40px; background: rgba(255,255,255,.15); }
+
+    /* Hero card */
+    .hero-card {
+      background: rgba(255,255,255,.08);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: var(--radius-2xl);
+      padding: 36px;
+      color: #fff;
+    }
+    .hero-card-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    .hero-card-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+    .hero-card-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.9375rem;
+      color: rgba(255,255,255,.85);
+    }
+    .hero-card-check {
+      flex-shrink: 0;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: rgba(242,208,34,.25);
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 1px;
+    }
+    .hero-card-check svg { color: var(--color-accent); }
+    .hero-card-form { display: flex; flex-direction: column; gap: 10px; }
+    .hero-card-input {
+      width: 100%;
+      background: rgba(255,255,255,.1);
+      border: 1.5px solid rgba(255,255,255,.18);
+      border-radius: var(--radius-md);
+      padding: 0.7rem 1rem;
+      font-family: var(--font-family);
+      font-size: 0.9375rem;
+      color: #fff;
+      outline: none;
+      transition: border-color var(--transition-fast), background var(--transition-fast);
+    }
+    .hero-card-input::placeholder { color: rgba(255,255,255,.4); }
+    .hero-card-input:focus {
+      border-color: var(--color-accent);
+      background: rgba(255,255,255,.14);
+    }
+
+    /* ============================================================
+       SERVICES
+       ============================================================ */
+    .services { padding: 100px 0; background: var(--color-bg); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .service-card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-xl);
+      padding: 36px 32px;
+      box-shadow: var(--shadow-xs);
+      transition: box-shadow var(--transition), transform var(--transition), border-color var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--color-primary);
+      transform: scaleX(0);
+      transition: transform var(--transition);
+    }
+    .service-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); border-color: transparent; }
+    .service-card:hover::before { transform: scaleX(1); }
+
+    .service-icon {
+      width: 56px; height: 56px;
+      border-radius: var(--radius-lg);
+      background: rgba(15,123,166,.1);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 22px;
+      color: var(--color-primary);
+    }
+    .service-card:nth-child(2) .service-icon { background: rgba(242,208,34,.15); color: #A07900; }
+    .service-card:nth-child(3) .service-icon { background: rgba(46,158,107,.1); color: #2E9E6B; }
+    .service-card:nth-child(4) .service-icon { background: rgba(38,64,64,.1); color: var(--color-primary-deep); }
+    .service-card:nth-child(5) .service-icon { background: rgba(14,86,115,.12); color: var(--color-primary-dark); }
+    .service-card:nth-child(6) .service-icon { background: rgba(217,64,64,.08); color: #D94040; }
+
+    .service-title { font-size: 1.125rem; font-weight: 600; margin-bottom: 10px; color: var(--color-text); }
+    .service-desc { font-size: 0.9375rem; color: var(--color-text-secondary); line-height: 1.65; }
+    .service-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.875rem; font-weight: 500;
+      color: var(--color-primary);
+      margin-top: 18px;
+      transition: gap var(--transition-fast);
+    }
+    .service-link:hover { gap: 10px; }
+
+    /* ============================================================
+       ABOUT / WHY US
+       ============================================================ */
+    .about { padding: 100px 0; background: var(--color-bg-soft); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .about-visual {
+      position: relative;
+    }
+    .about-card-main {
+      background: var(--color-primary-deep);
+      border-radius: var(--radius-2xl);
+      padding: 44px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-card-main::before {
+      content: '';
+      position: absolute; top: -60px; right: -60px;
+      width: 240px; height: 240px;
+      border-radius: 50%;
+      background: rgba(242,208,34,.08);
+    }
+    .about-card-main::after {
+      content: '';
+      position: absolute; bottom: -80px; left: -40px;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: rgba(15,123,166,.12);
+    }
+    .about-avatar {
+      width: 88px; height: 88px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-bottom: 20px;
+      border: 3px solid rgba(255,255,255,.25);
+      position: relative; z-index: 1;
+      flex-shrink: 0;
+    }
+    .about-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+    .about-name { font-size: 1.25rem; font-weight: 700; margin-bottom: 4px; position: relative; z-index: 1; }
+    .about-role { font-size: 0.875rem; color: rgba(255,255,255,.6); margin-bottom: 20px; position: relative; z-index: 1; }
+    .about-quote {
+      font-size: 0.9375rem;
+      line-height: 1.7;
+      color: rgba(255,255,255,.8);
+      font-style: italic;
+      position: relative; z-index: 1;
+      border-left: 3px solid var(--color-accent);
+      padding-left: 16px;
+    }
+
+    .about-float {
+      position: absolute;
+      right: -20px; bottom: -20px;
+      background: var(--color-accent);
+      border-radius: var(--radius-xl);
+      padding: 18px 22px;
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+    }
+    .about-float-value { font-size: 1.75rem; font-weight: 800; color: var(--color-primary-deep); line-height: 1; }
+    .about-float-label { font-size: 0.75rem; font-weight: 600; color: var(--color-primary-deep); margin-top: 4px; line-height: 1.3; }
+
+    .about-content {}
+    .about-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-top: 32px;
+    }
+    .about-item {
+      display: flex;
+      gap: 16px;
+    }
+    .about-item-icon {
+      flex-shrink: 0;
+      width: 44px; height: 44px;
+      border-radius: var(--radius-md);
+      background: rgba(15,123,166,.1);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-primary);
+      margin-top: 2px;
+    }
+    .about-item-title { font-size: 1rem; font-weight: 600; margin-bottom: 4px; }
+    .about-item-desc { font-size: 0.9375rem; color: var(--color-text-secondary); line-height: 1.6; }
+
+    /* ============================================================
+       STATS
+       ============================================================ */
+    .stats { padding: 80px 0; background: var(--color-primary-deep); }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,.08);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+    }
+    .stat-item {
+      padding: 40px 32px;
+      background: rgba(255,255,255,.04);
+      text-align: center;
+      transition: background var(--transition);
+    }
+    .stat-item:hover { background: rgba(255,255,255,.08); }
+    .stat-value {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      color: var(--color-accent);
+      line-height: 1;
+      margin-bottom: 8px;
+      letter-spacing: -.02em;
+    }
+    .stat-label { font-size: 0.875rem; color: rgba(255,255,255,.6); line-height: 1.4; }
+
+    /* ============================================================
+       PRICING
+       ============================================================ */
+    .pricing { padding: 100px 0; background: var(--color-bg); }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+    .pricing-card {
+      background: var(--color-bg);
+      border: 2px solid var(--color-border-light);
+      border-radius: var(--radius-xl);
+      padding: 36px 32px;
+      position: relative;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+    .pricing-card:hover { border-color: var(--color-primary); box-shadow: var(--shadow-lg); }
+    .pricing-card.featured {
+      border-color: var(--color-primary);
+      box-shadow: var(--shadow-xl);
+      transform: translateY(-8px);
+      background: var(--color-bg);
+    }
+    .pricing-popular {
+      position: absolute;
+      top: -15px; left: 50%; transform: translateX(-50%);
+      background: var(--color-primary);
+      color: #fff;
+      font-size: 0.6875rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .08em;
+      padding: 5px 18px;
+      border-radius: var(--radius-full);
+      white-space: nowrap;
+    }
+    .pricing-name { font-size: 1rem; font-weight: 600; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 16px; }
+    .pricing-price {
+      display: flex; align-items: baseline; gap: 6px;
+      margin-bottom: 8px;
+    }
+    .pricing-amount { font-size: 2.25rem; font-weight: 800; color: var(--color-primary-deep); letter-spacing: -.02em; line-height: 1; }
+    .pricing-currency { font-size: 1rem; font-weight: 600; color: var(--color-text-secondary); }
+    .pricing-period { font-size: 0.875rem; color: var(--color-text-muted); margin-bottom: 8px; }
+    .pricing-sub { font-size: 0.875rem; color: var(--color-text-muted); margin-bottom: 28px; }
+    .pricing-divider { border: none; border-top: 1px solid var(--color-border-light); margin-bottom: 24px; }
+    .pricing-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
+    .pricing-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 0.9375rem; color: var(--color-text-secondary);
+      line-height: 1.4;
+    }
+    .check-icon {
+      flex-shrink: 0;
+      width: 20px; height: 20px;
+      margin-top: 1px;
+      color: var(--color-success);
+    }
+    .pricing-btn { width: 100%; justify-content: center; }
+    .pricing-note { text-align: center; margin-top: 40px; font-size: 0.875rem; color: var(--color-text-muted); }
+    .pricing-note a { color: var(--color-primary); }
+
+    /* ============================================================
+       PROCESS / HOW IT WORKS
+       ============================================================ */
+    .process { padding: 100px 0; background: var(--color-bg-soft); }
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      position: relative;
+    }
+    .process-steps::before {
+      content: '';
+      position: absolute;
+      top: 28px; left: 60px; right: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+      z-index: 0;
+    }
+    .process-step {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+    .process-num {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      color: #fff;
+      font-size: 1.125rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+      border: 4px solid var(--color-bg-soft);
+      box-shadow: 0 0 0 2px var(--color-primary);
+    }
+    .process-step:nth-child(4) .process-num { background: var(--color-accent); color: var(--color-primary-deep); box-shadow: 0 0 0 2px var(--color-accent); }
+    .process-step-title { font-size: 1rem; font-weight: 600; margin-bottom: 8px; color: var(--color-text); }
+    .process-step-desc { font-size: 0.875rem; color: var(--color-text-secondary); line-height: 1.6; }
+
+    /* ============================================================
+       TESTIMONIALS
+       ============================================================ */
+    .testimonials { padding: 100px 0; background: var(--color-bg); }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .testimonial-card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-xl);
+      padding: 32px;
+      box-shadow: var(--shadow-xs);
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+    .testimonial-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .testimonial-stars { display: flex; gap: 3px; margin-bottom: 16px; }
+    .star { color: var(--color-accent); font-size: 1rem; }
+    .testimonial-text { font-size: 0.9375rem; color: var(--color-text-secondary); line-height: 1.7; margin-bottom: 24px; font-style: italic; }
+    .testimonial-author { display: flex; align-items: center; gap: 12px; }
+    .testimonial-avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.875rem; font-weight: 700; color: #fff;
+      flex-shrink: 0;
+    }
+    .testimonial-name { font-size: 0.9375rem; font-weight: 600; }
+    .testimonial-role { font-size: 0.8125rem; color: var(--color-text-muted); }
+
+    /* ============================================================
+       CONTACT
+       ============================================================ */
+    .contact { padding: 100px 0; background: var(--color-bg-soft); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+    .contact-info { padding-top: 8px; }
+    .contact-list { display: flex; flex-direction: column; gap: 20px; margin-top: 32px; }
+    .contact-item { display: flex; align-items: flex-start; gap: 16px; }
+    .contact-icon {
+      width: 48px; height: 48px; flex-shrink: 0;
+      border-radius: var(--radius-md);
+      background: rgba(15,123,166,.1);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-primary);
+    }
+    .contact-item-label { font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--color-text-muted); margin-bottom: 4px; }
+    .contact-item-value { font-size: 1rem; font-weight: 500; color: var(--color-text); }
+    .contact-item-value a { color: var(--color-primary); }
+    .contact-item-value a:hover { text-decoration: underline; }
+    .contact-socials { display: flex; gap: 10px; margin-top: 32px; flex-wrap: wrap; }
+    .social-btn {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 16px;
+      border-radius: var(--radius-full);
+      border: 1.5px solid var(--color-border);
+      font-size: 0.875rem; font-weight: 500;
+      color: var(--color-text-secondary);
+      transition: border-color var(--transition-fast), color var(--transition-fast), background var(--transition-fast);
+    }
+    .social-btn:hover { border-color: var(--color-primary); color: var(--color-primary); background: rgba(15,123,166,.05); }
+
+    /* Contact form */
+    .contact-form-card {
+      background: var(--color-bg);
+      border-radius: var(--radius-2xl);
+      padding: 44px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--color-border-light);
+    }
+    .form-title { font-size: 1.375rem; font-weight: 700; margin-bottom: 6px; color: var(--color-primary-deep); }
+    .form-subtitle { font-size: 0.9375rem; color: var(--color-text-secondary); margin-bottom: 28px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-label { font-size: 0.875rem; font-weight: 500; color: var(--color-text); }
+    .req { color: #D94040; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .input, .select, .textarea {
+      font-family: var(--font-family);
+      font-size: 0.9375rem;
+      color: var(--color-text);
+      background: var(--color-bg);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 0.7rem 0.9rem;
+      width: 100%;
+      outline: none;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+      appearance: none;
+    }
+    .input::placeholder, .textarea::placeholder { color: var(--color-text-muted); }
+    .input:hover, .select:hover, .textarea:hover { border-color: var(--color-primary); }
+    .input:focus, .select:focus, .textarea:focus {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(15,123,166,.15);
+    }
+    .select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235C5C5C' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 36px;
+      cursor: pointer;
+    }
+    .textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
+    .form-fields { display: flex; flex-direction: column; gap: 16px; }
+    .form-agree { display: flex; align-items: flex-start; gap: 10px; }
+    .form-agree input { margin-top: 2px; accent-color: var(--color-primary); cursor: pointer; }
+    .form-agree label { font-size: 0.8125rem; color: var(--color-text-secondary); line-height: 1.5; cursor: pointer; }
+    .form-agree a { color: var(--color-primary); }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    .footer { background: var(--color-primary-deep); padding: 72px 0 0; }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2.2fr 1fr 1fr 1.2fr;
+      gap: 48px;
+      padding-bottom: 56px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .footer-logo { font-size: 1.5rem; font-weight: 800; color: #fff; letter-spacing: -.03em; margin-bottom: 12px; }
+    .footer-logo span { color: var(--color-accent); }
+    .footer-tagline { font-size: 0.9375rem; color: rgba(255,255,255,.55); line-height: 1.7; max-width: 260px; margin-bottom: 24px; }
+    .footer-insurance {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(242,208,34,.12);
+      border: 1px solid rgba(242,208,34,.2);
+      border-radius: var(--radius-md);
+      padding: 8px 14px;
+      font-size: 0.8125rem; font-weight: 500;
+      color: var(--color-accent);
+    }
+
+    .footer-col-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: rgba(255,255,255,.4); margin-bottom: 20px; }
+    .footer-links { display: flex; flex-direction: column; gap: 12px; }
+    .footer-links a { font-size: 0.9375rem; color: rgba(255,255,255,.65); transition: color var(--transition-fast); }
+    .footer-links a:hover { color: #fff; }
+
+    .footer-contact-item { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .footer-contact-item a { font-size: 0.9375rem; color: rgba(255,255,255,.65); transition: color var(--transition-fast); }
+    .footer-contact-item a:hover { color: #fff; }
+    .footer-contact-icon { color: rgba(255,255,255,.35); flex-shrink: 0; }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding: 20px 0;
+    }
+    .footer-copy { font-size: 0.8125rem; color: rgba(255,255,255,.3); }
+    .footer-bottom-links { display: flex; gap: 20px; }
+    .footer-bottom-links a { font-size: 0.8125rem; color: rgba(255,255,255,.35); transition: color var(--transition-fast); }
+    .footer-bottom-links a:hover { color: rgba(255,255,255,.7); }
+
+    /* ============================================================
+       SCROLL TO TOP
+       ============================================================ */
+    .scroll-top {
+      position: fixed;
+      bottom: 28px; right: 28px;
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--shadow-lg);
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity var(--transition), transform var(--transition), background var(--transition-fast);
+      z-index: 50;
+      border: none;
+    }
+    .scroll-top.visible { opacity: 1; transform: translateY(0); }
+    .scroll-top:hover { background: var(--color-primary-dark); }
+
+    /* ============================================================
+       ANIMATIONS
+       ============================================================ */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 1024px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+      .hero-card { max-width: 520px; }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .about-grid { grid-template-columns: 1fr; gap: 48px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .pricing-grid { grid-template-columns: 1fr 1fr; max-width: 100%; }
+      .pricing-card.featured { transform: none; }
+      .process-steps { grid-template-columns: repeat(2, 1fr); }
+      .process-steps::before { display: none; }
+      .testimonials-grid { grid-template-columns: 1fr 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .contact-form-card { padding: 36px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; row-gap: 36px; }
+    }
+    @media (max-width: 768px) {
+      .nav-links, .nav-phone { display: none; }
+      .burger { display: flex; }
+      .hero { padding-top: calc(var(--nav-h) + 24px); min-height: auto; }
+      .hero-title { font-size: 2rem; }
+      .section-title { font-size: 1.75rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .about-float { position: static; margin-top: 16px; display: inline-block; }
+    }
+    @media (max-width: 480px) {
+      .hero-cta { flex-direction: column; }
+      .hero-cta .btn { width: 100%; justify-content: center; }
+      .hero-trust { flex-wrap: wrap; justify-content: center; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .contact-form-card { padding: 24px; }
+      .process-steps { grid-template-columns: 1fr; }
+      .scroll-top { bottom: 16px; right: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════
+       NAVIGATION
+       ══════════════════════════════════════════ -->
+  <nav class="nav" id="nav">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo">TA<span>-VAT</span></a>
+
+        <ul class="nav-links">
+          <li><a href="#services" class="nav-link">Услуги</a></li>
+          <li><a href="#about" class="nav-link">О нас</a></li>
+          <li><a href="#pricing" class="nav-link">Тарифы</a></li>
+          <li><a href="#process" class="nav-link">Как работаем</a></li>
+          <li><a href="#contact" class="nav-link">Контакты</a></li>
+        </ul>
+
+        <div class="nav-right">
+          <a href="tel:+998909914039" class="nav-phone">+998 90 991-40-39</a>
+          <a href="#contact" class="btn btn-primary btn-sm">Заявка</a>
+          <button class="burger" id="burger" aria-label="Меню">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="#services" class="nav-link">Услуги</a>
+      <a href="#about" class="nav-link">О нас</a>
+      <a href="#pricing" class="nav-link">Тарифы</a>
+      <a href="#process" class="nav-link">Как работаем</a>
+      <a href="#contact" class="nav-link">Контакты</a>
+      <a href="#contact" class="btn btn-primary">Оставить заявку</a>
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════════════════
+       HERO
+       ══════════════════════════════════════════ -->
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <div class="hero-eyebrow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Ташкент, Узбекистан
+          </div>
+          <h1 class="hero-title">
+            Ваши финансы<br />под <span>надёжной</span><br />защитой
+          </h1>
+          <p class="hero-desc">
+            TA-VAT — бухгалтерский и налоговый аутсорсинг для предпринимателей и компаний в Узбекистане. Полный документооборот, налоговая отчётность, оптимизация налогов.
+          </p>
+          <div class="hero-cta">
+            <a href="#contact" class="btn btn-accent btn-lg">Получить консультацию</a>
+            <a href="#services" class="btn btn-outline-white btn-lg">Наши услуги</a>
+          </div>
+          <div class="hero-trust">
+            <div class="hero-trust-item">
+              <div class="hero-trust-value">15+</div>
+              <div class="hero-trust-label">специалистов<br/>в команде</div>
+            </div>
+            <div class="hero-trust-sep"></div>
+            <div class="hero-trust-item">
+              <div class="hero-trust-value">200+</div>
+              <div class="hero-trust-label">довольных<br/>клиентов</div>
+            </div>
+            <div class="hero-trust-sep"></div>
+            <div class="hero-trust-item">
+              <div class="hero-trust-value">5 лет</div>
+              <div class="hero-trust-label">на рынке<br/>Узбекистана</div>
+            </div>
+            <div class="hero-trust-sep"></div>
+            <div class="hero-trust-item">
+              <div class="hero-trust-value">1 млрд</div>
+              <div class="hero-trust-label">страховое<br/>покрытие (сум)</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="hero-card">
+            <div class="hero-card-title">Почему выбирают TA-VAT</div>
+            <ul class="hero-card-list">
+              <li class="hero-card-item">
+                <span class="hero-card-check"><svg width="12" height="12" viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 5l3.5 3.5L11 1"/></svg></span>
+                Трёхуровневый контроль качества на каждом этапе
+              </li>
+              <li class="hero-card-item">
+                <span class="hero-card-check"><svg width="12" height="12" viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 5l3.5 3.5L11 1"/></svg></span>
+                Ответственность застрахована на 1 млрд сум
+              </li>
+              <li class="hero-card-item">
+                <span class="hero-card-check"><svg width="12" height="12" viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 5l3.5 3.5L11 1"/></svg></span>
+                Работаем с my.soliq.uz и другими госсервисами
+              </li>
+              <li class="hero-card-item">
+                <span class="hero-card-check"><svg width="12" height="12" viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 5l3.5 3.5L11 1"/></svg></span>
+                Личный менеджер в Telegram 24/7
+              </li>
+              <li class="hero-card-item">
+                <span class="hero-card-check"><svg width="12" height="12" viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 5l3.5 3.5L11 1"/></svg></span>
+                ИП, ООО — любая форма компании
+              </li>
+            </ul>
+            <div class="hero-card-form">
+              <input class="hero-card-input" type="text" placeholder="Ваше имя" />
+              <input class="hero-card-input" type="tel" placeholder="+998 __ ___ __ __" />
+              <a href="#contact" class="btn btn-accent" style="width:100%;justify-content:center;margin-top:4px">Получить бесплатную консультацию</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       SERVICES
+       ══════════════════════════════════════════ -->
+  <section class="services" id="services">
+    <div class="container">
+      <div class="section-header center">
+        <span class="section-eyebrow">Что мы делаем</span>
+        <h2 class="section-title">Полный спектр <span>бухгалтерских услуг</span></h2>
+        <p class="section-desc">Берём на себя всю рутину, чтобы вы занимались развитием бизнеса, а не бумагами</p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card fade-up">
+          <div class="service-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
+          <div class="service-title">Бухгалтерский учёт</div>
+          <div class="service-desc">Ведение первичной документации, книги учёта доходов и расходов, подготовка финансовой отчётности для любой формы предприятия.</div>
+          <a href="#contact" class="service-link">Узнать подробнее <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+
+        <div class="service-card fade-up">
+          <div class="service-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <div class="service-title">Налоговая отчётность</div>
+          <div class="service-desc">Расчёт и своевременная подача всех видов деклараций. Работаем с my.soliq.uz, отслеживаем сроки и уведомляем заранее.</div>
+          <a href="#contact" class="service-link">Узнать подробнее <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+
+        <div class="service-card fade-up">
+          <div class="service-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <div class="service-title">Налоговая оптимизация</div>
+          <div class="service-desc">Анализируем структуру бизнеса и находим легальные способы снизить налоговую нагрузку. Индивидуальный подход к каждому клиенту.</div>
+          <a href="#contact" class="service-link">Узнать подробнее <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+
+        <div class="service-card fade-up">
+          <div class="service-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="service-title">Обучение бухгалтеров</div>
+          <div class="service-desc">Онлайн и офлайн курсы для начинающих и практикующих бухгалтеров. Наставничество и разбор реальных кейсов от практиков.</div>
+          <a href="#contact" class="service-link">Узнать подробнее <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+
+        <div class="service-card fade-up">
+          <div class="service-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div class="service-title">Аналитика и контроль</div>
+          <div class="service-desc">Ежемесячные отчёты о финансовом состоянии бизнеса, контроль рейтингов налоговых кабинетов, анализ дебиторской задолженности.</div>
+          <a href="#contact" class="service-link">Узнать подробнее <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+
+        <div class="service-card fade-up">
+          <div class="service-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <div class="service-title">Консультации для бизнеса</div>
+          <div class="service-desc">Отвечаем на вопросы по бухгалтерскому учёту, налогам и законодательству Узбекистана. Разовые консультации и абонементное сопровождение.</div>
+          <a href="#contact" class="service-link">Узнать подробнее <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       ABOUT
+       ══════════════════════════════════════════ -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-visual fade-up">
+          <div class="about-card-main">
+            <div class="about-avatar">
+              <img src="https://tavat.uz/thumb/2/VZFX16uQNs6OwPsH2Cs9aw/1200r1200/d/svsv8744.jpg" alt="Александра Толмачева" />
+            </div>
+            <div class="about-name">Александра Толмачева</div>
+            <div class="about-role">Основатель TA-VAT · Главный бухгалтер с опытом 16+ лет</div>
+            <div class="about-quote">
+              «Выбирая нашу компанию, вы будете уверены, что ваша бухгалтерия в заботливых руках профессионалов.»
+            </div>
+          </div>
+          <div class="about-float">
+            <div class="about-float-value">3 млрд+</div>
+            <div class="about-float-label">оборот компаний<br/>под управлением</div>
+          </div>
+        </div>
+
+        <div class="about-content fade-up">
+          <span class="section-eyebrow">О компании</span>
+          <h2 class="section-title">Надёжный партнёр<br/>для вашего <span>бизнеса</span></h2>
+          <p class="section-desc" style="margin-top:16px">
+            TA-VAT — это команда из 15 специалистов, которые ежедневно ведут бухгалтерский и налоговый учёт для предпринимателей и компаний в Узбекистане.
+          </p>
+
+          <div class="about-list">
+            <div class="about-item">
+              <div class="about-item-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <div>
+                <div class="about-item-title">Трёхуровневый контроль качества</div>
+                <div class="about-item-desc">Каждый документ проверяют бухгалтер, старший специалист и руководитель направления — ошибки исключены.</div>
+              </div>
+            </div>
+            <div class="about-item">
+              <div class="about-item-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+              </div>
+              <div>
+                <div class="about-item-title">Страхование ответственности</div>
+                <div class="about-item-desc">Профессиональная ответственность застрахована на 1 млрд сум — вы защищены от любых финансовых рисков, связанных с нашей работой.</div>
+              </div>
+            </div>
+            <div class="about-item">
+              <div class="about-item-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              </div>
+              <div>
+                <div class="about-item-title">Коммуникация в Telegram</div>
+                <div class="about-item-desc">Личный менеджер отвечает в мессенджере — никаких звонков в офис и ожидания. Вопрос задан — ответ получен.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       STATS
+       ══════════════════════════════════════════ -->
+  <section class="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-value">15+</div>
+          <div class="stat-label">специалистов<br/>в команде</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">200+</div>
+          <div class="stat-label">клиентов<br/>обслужили</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">5 лет</div>
+          <div class="stat-label">опыт работы<br/>в Узбекистане</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">1 млрд</div>
+          <div class="stat-label">страховое покрытие<br/>в сумах</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       PRICING
+       ══════════════════════════════════════════ -->
+  <section class="pricing" id="pricing">
+    <div class="container">
+      <div class="section-header center">
+        <span class="section-eyebrow">Стоимость</span>
+        <h2 class="section-title">Прозрачные <span>тарифы</span></h2>
+        <p class="section-desc">Стоимость зависит от оборота компании и формы собственности. Без скрытых платежей.</p>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:12px;background:rgba(242,208,34,.15);border:1.5px solid rgba(242,208,34,.4);border-radius:var(--radius-lg);padding:14px 20px;margin-bottom:36px;flex-wrap:wrap">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A07900" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <span style="font-size:0.9375rem;color:#7A5500;line-height:1.5"><strong style="color:#5C3D00">Специальное предложение:</strong> в первые 3 месяца с даты регистрации компании действует скидка <strong style="color:#5C3D00">50%</strong> на все тарифы.</span>
+      </div>
+
+      <div class="pricing-grid" style="grid-template-columns:repeat(3,1fr)">
+
+        <!-- Тариф 1 -->
+        <div class="pricing-card fade-up">
+          <div class="pricing-name">Тариф 1 · ИП</div>
+          <div class="pricing-price">
+            <div class="pricing-amount" style="font-size:1.875rem">2 542 000</div>
+            <div class="pricing-currency">сум</div>
+          </div>
+          <div class="pricing-period">в месяц</div>
+          <div style="display:inline-flex;align-items:center;gap:6px;background:var(--color-success-bg);color:var(--color-success);font-size:0.8rem;font-weight:600;padding:4px 10px;border-radius:var(--radius-full);margin:8px 0 16px">
+            Первые 3 мес — 1 271 000 сум
+          </div>
+          <hr class="pricing-divider" />
+          <ul class="pricing-list">
+            <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> ИП (без 1С)</li>
+            <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Налог с оборота</li>
+            <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Годовой оборот до 0,5 млрд сум</li>
+            <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> До 1 сотрудника</li>
+            <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> До 20 операций в месяц</li>
+          </ul>
+          <a href="#contact" class="btn btn-outline pricing-btn">Выбрать тариф</a>
+        </div>
+
+        <!-- Тариф 2 -->
+        <div class="pricing-card fade-up">
+          <div class="pricing-name">Тариф 2 · ООО</div>
+          <div class="pricing-price">
+            <div class="pricing-amount" style="font-size:1.875rem">4 448 500</div>
+            <div class="pricing-currency">сум</div>
+          </div>
+          <div class="pricing-period">в месяц</div>
+          <div style="display:inline-flex;align-items:center;gap:6px;background:var(--color-success-bg);color:var(--color-success);font-size:0.8rem;font-weight:600;padding:4px 10px;border-radius:var(--radius-full);margin:8px 0 16px">
+            Первые 3 мес — 2 224 250 сум
+          </div>
+          <hr class="pricing-divider" />
+          <ul class="pricing-list">
+            <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> ООО</li>
+            <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Налог с оборота</li>
+            <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Годовой оборот до 1 млрд сум</li>
+            <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> До 4 сотрудников</li>
+            <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> До 30 операций в месяц</li>
+          </ul>
+          <a href="#contact" class="btn btn-outline pricing-btn">Выбрать тариф</a>
+        </div>
+
+        <!-- Тариф 3 — featured -->
+        <div class="pricing-card featured fade-up">
+          <div class="pricing-popular">Популярный</div>
+          <div class="pricing-name">Тариф 3 · ООО</div>
+          <div class="pricing-price">
+            <div class="pricing-amount" style="font-size:1.875rem">7 626 000</div>
+            <div class="pricing-currency">сум</div>
+          </div>
+          <div class="pricing-period">в месяц</div>
+          <div style="display:inline-flex;align-items:center;gap:6px;background:var(--color-success-bg);color:var(--color-success);font-size:0.8rem;font-weight:600;padding:4px 10px;border-radius:var(--radius-full);margin:8px 0 16px">
+            Первые 3 мес — 3 813 000 сум
+          </div>
+          <hr class="pricing-divider" />
+          <ul class="pricing-list">
+            <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> ООО</li>
+            <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> ОСН (НДС)</li>
+            <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Годовой оборот 1–3 млрд сум</li>
+            <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> До 8 сотрудников</li>
+            <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> До 60 операций в месяц</li>
+          </ul>
+          <a href="#contact" class="btn btn-primary pricing-btn">Выбрать тариф</a>
+        </div>
+
+        <!-- Тариф 4 -->
+        <div class="pricing-card fade-up">
+          <div class="pricing-name">Тариф 4 · ООО</div>
+          <div class="pricing-price">
+            <div class="pricing-amount" style="font-size:1.875rem">10 168 000</div>
+            <div class="pricing-currency">сум</div>
+          </div>
+          <div class="pricing-period">в месяц</div>
+          <div style="display:inline-flex;align-items:center;gap:6px;background:var(--color-success-bg);color:var(--color-success);font-size:0.8rem;font-weight:600;padding:4px 10px;border-radius:var(--radius-full);margin:8px 0 16px">
+            Первые 3 мес — 5 084 000 сум
+          </div>
+          <hr class="pricing-divider" />
+          <ul class="pricing-list">
+            <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> ООО</li>
+            <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> ОСН (НДС)</li>
+            <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Годовой оборот 3–6 млрд сум</li>
+            <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> До 15 сотрудников</li>
+            <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> До 90 операций в месяц</li>
+          </ul>
+          <a href="#contact" class="btn btn-outline pricing-btn">Выбрать тариф</a>
+        </div>
+
+        <!-- Тариф 5 — ВЭД -->
+        <div class="pricing-card fade-up">
+          <div class="pricing-name">Тариф 5 · ООО + ВЭД</div>
+          <div class="pricing-price">
+            <div class="pricing-amount" style="font-size:1.875rem">12 710 000</div>
+            <div class="pricing-currency">сум</div>
+          </div>
+          <div class="pricing-period">в месяц</div>
+          <div style="display:inline-flex;align-items:center;gap:6px;background:var(--color-success-bg);color:var(--color-success);font-size:0.8rem;font-weight:600;padding:4px 10px;border-radius:var(--radius-full);margin:8px 0 16px">
+            Первые 3 мес — 6 355 000 сум
+          </div>
+          <hr class="pricing-divider" />
+          <ul class="pricing-list">
+            <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> ООО (ВЭД включён)</li>
+            <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> ОСН (НДС)</li>
+            <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Годовой оборот 6–9 млрд сум</li>
+            <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> До 20 сотрудников</li>
+            <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> До 130 операций в месяц</li>
+          </ul>
+          <a href="#contact" class="btn btn-outline pricing-btn">Выбрать тариф</a>
+        </div>
+
+        <!-- Тариф 6 — ВЭД -->
+        <div class="pricing-card fade-up">
+          <div class="pricing-name">Тариф 6 · ООО + ВЭД</div>
+          <div class="pricing-price">
+            <div class="pricing-amount" style="font-size:1.875rem">15 252 000</div>
+            <div class="pricing-currency">сум</div>
+          </div>
+          <div class="pricing-period">в месяц</div>
+          <div style="display:inline-flex;align-items:center;gap:6px;background:var(--color-success-bg);color:var(--color-success);font-size:0.8rem;font-weight:600;padding:4px 10px;border-radius:var(--radius-full);margin:8px 0 16px">
+            Первые 3 мес — 7 626 000 сум
+          </div>
+          <hr class="pricing-divider" />
+          <ul class="pricing-list">
+            <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> ООО (ВЭД включён)</li>
+            <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> ОСН (НДС)</li>
+            <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Годовой оборот 9–12 млрд сум</li>
+            <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> До 25 сотрудников</li>
+            <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> До 170 операций в месяц</li>
+          </ul>
+          <a href="#contact" class="btn btn-outline pricing-btn">Выбрать тариф</a>
+        </div>
+
+      </div>
+
+      <p class="pricing-note">
+        Не уверены в выборе тарифа? <a href="#contact">Напишите нам</a> — подберём оптимальный вариант под ваш бизнес. ВЭД контракты и управленческая отчётность обсуждаются отдельно.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       PROCESS
+       ══════════════════════════════════════════ -->
+  <section class="process" id="process">
+    <div class="container">
+      <div class="section-header center">
+        <span class="section-eyebrow">Как мы работаем</span>
+        <h2 class="section-title">Старт за <span>4 шага</span></h2>
+        <p class="section-desc">От первого обращения до полного ведения вашей бухгалтерии — быстро и без лишних документов</p>
+      </div>
+
+      <div class="process-steps">
+        <div class="process-step fade-up">
+          <div class="process-num">1</div>
+          <div class="process-step-title">Консультация</div>
+          <div class="process-step-desc">Бесплатно обсуждаем ваш бизнес, форму компании и текущие задачи. Определяем оптимальный тариф.</div>
+        </div>
+        <div class="process-step fade-up">
+          <div class="process-num">2</div>
+          <div class="process-step-title">Договор и доступы</div>
+          <div class="process-step-desc">Подписываем договор, получаем доступы к налоговым кабинетам и принимаем документы.</div>
+        </div>
+        <div class="process-step fade-up">
+          <div class="process-num">3</div>
+          <div class="process-step-title">Аудит и переход</div>
+          <div class="process-step-desc">Аудируем предыдущие периоды, устраняем ошибки, налаживаем процессы документооборота.</div>
+        </div>
+        <div class="process-step fade-up">
+          <div class="process-num">4</div>
+          <div class="process-step-title">Работа и контроль</div>
+          <div class="process-step-desc">Ведём учёт, сдаём отчёты и держим вас в курсе через Telegram. Трёхуровневый контроль на каждом этапе.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       TESTIMONIALS
+       ══════════════════════════════════════════ -->
+  <section class="testimonials">
+    <div class="container">
+      <div class="section-header center">
+        <span class="section-eyebrow">Отзывы клиентов</span>
+        <h2 class="section-title">Нам доверяют <span>предприниматели</span></h2>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card fade-up">
+          <div class="testimonial-stars">
+            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+          </div>
+          <div class="testimonial-text">«Раньше мы сами пытались разобраться в бухгалтерии, но это было очень сложно и занимало много времени. Тогда мы решили обратиться к профессионалам и выбрали TA-VAT. Они взяли на себя весь бухгалтерский и налоговый учёт, теперь мы уверены, что наша отчётность будет сдаваться вовремя. Я очень довольна работой TA-VAT.»</div>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">МК</div>
+            <div>
+              <div class="testimonial-name">Мария Казначеева</div>
+              <div class="testimonial-role">Генеральный директор, OOO ART PROJECT TECHNOLOGY</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card fade-up">
+          <div class="testimonial-stars">
+            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+          </div>
+          <div class="testimonial-text">«Когда мы начали свою деятельность в Узбекистане, то поняли, что рынок бухгалтерских услуг очень специфичен. Мы постарались найти действительно надёжного партнёра — и компания TA-VAT стала именно такой. Мы ни разу не пожалели о своём выборе и рекомендуем их как профессионалов.»</div>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar" style="background:var(--color-primary-dark)">АД</div>
+            <div>
+              <div class="testimonial-name">Андрей</div>
+              <div class="testimonial-role">Директор, Lunagro</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card fade-up">
+          <div class="testimonial-stars">
+            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+          </div>
+          <div class="testimonial-text">«Несколько лет сотрудничаем с компанией TA-VAT — с уверенностью могу рекомендовать их как профессионалов своего дела.»</div>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar" style="background:var(--color-accent);color:var(--color-primary-deep)">ББ</div>
+            <div>
+              <div class="testimonial-name">Баходир Баходиров</div>
+              <div class="testimonial-role">Mediofarm Plast</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card fade-up">
+          <div class="testimonial-stars">
+            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+          </div>
+          <div class="testimonial-text">«Хочу выразить огромную благодарность компании TA-VAT за грамотные консультации в области финансов. Они одни из лучших в Республике Узбекистан.»</div>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar" style="background:var(--color-primary-deep)">АМ</div>
+            <div>
+              <div class="testimonial-name">Андрей Мартьянов</div>
+              <div class="testimonial-role">AMV GROUP</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card fade-up">
+          <div class="testimonial-stars">
+            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+          </div>
+          <div class="testimonial-text">«TA-VAT используют современные технологии, что делает процесс максимально удобным и эффективным. Работать с ними — настоящее удовольствие.»</div>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar" style="background:var(--color-success)">ВУ</div>
+            <div>
+              <div class="testimonial-name">Висола Усманова</div>
+              <div class="testimonial-role">OOO ORTUS SOLIS X GROUP</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card fade-up">
+          <div class="testimonial-stars">
+            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+          </div>
+          <div class="testimonial-text">«TA-VAT помогают правильно и вовремя сдавать отчётность. Рекомендую TA-VAT всем, кто ищет настоящих специалистов в своём деле!»</div>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar" style="background:var(--color-accent);color:var(--color-primary-deep)">АФ</div>
+            <div>
+              <div class="testimonial-name">Азамат</div>
+              <div class="testimonial-role">Feraz Tour</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       CONTACT
+       ══════════════════════════════════════════ -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info fade-up">
+          <span class="section-eyebrow">Связаться с нами</span>
+          <h2 class="section-title">Готовы начать<br/>сотрудничество?</h2>
+          <p class="section-desc" style="margin-top:16px">Оставьте заявку — перезвоним в течение 2 часов в рабочее время и ответим на все вопросы</p>
+
+          <div class="contact-list">
+            <div class="contact-item">
+              <div class="contact-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.6a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 3h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 10.9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17.92z"/></svg>
+              </div>
+              <div>
+                <div class="contact-item-label">Телефон</div>
+                <div class="contact-item-value"><a href="tel:+998909914039">+998 90 991-40-39</a></div>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <div>
+                <div class="contact-item-label">Email</div>
+                <div class="contact-item-value"><a href="mailto:info@tavat.uz">info@tavat.uz</a></div>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <div>
+                <div class="contact-item-label">Адрес</div>
+                <div class="contact-item-value">Ташкент, Узбекистан</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-socials">
+            <a href="https://t.me/tavat_info" class="social-btn" target="_blank" rel="noopener">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+              Telegram
+            </a>
+            <a href="https://instagram.com/tavat.consulting" class="social-btn" target="_blank" rel="noopener">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              Instagram
+            </a>
+            <a href="https://youtube.com/@TAVAT.consulting" class="social-btn" target="_blank" rel="noopener">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+              YouTube
+            </a>
+            <a href="https://www.linkedin.com/company/ta-vat/" class="social-btn" target="_blank" rel="noopener">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+
+        <div class="fade-up">
+          <div class="contact-form-card">
+            <div class="form-title">Оставить заявку</div>
+            <div class="form-subtitle">Ответим в течение 2 часов в рабочее время</div>
+            <form onsubmit="handleSubmit(event)">
+              <div class="form-fields">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label">Имя <span class="req">*</span></label>
+                    <input class="input" type="text" placeholder="Ваше имя" required />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Телефон <span class="req">*</span></label>
+                    <input class="input" type="tel" placeholder="+998 __ ___ __ __" required />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Email</label>
+                  <input class="input" type="email" placeholder="example@mail.com" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Тип компании</label>
+                  <select class="select">
+                    <option value="">Выберите тип...</option>
+                    <option>ИП</option>
+                    <option>ООО</option>
+                    <option>Физическое лицо</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Ваш вопрос</label>
+                  <textarea class="textarea" placeholder="Опишите задачу или вопрос..."></textarea>
+                </div>
+                <div class="form-agree">
+                  <input type="checkbox" id="agree" required />
+                  <label for="agree">Я согласен(а) с <a href="#">политикой конфиденциальности</a> и обработкой персональных данных</label>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:0.875rem" id="submit-btn">
+                  Отправить заявку
+                </button>
+              </div>
+            </form>
+            <div id="form-success" style="display:none;text-align:center;padding:32px 0">
+              <div style="font-size:2.5rem;margin-bottom:12px">✅</div>
+              <div style="font-size:1.125rem;font-weight:600;color:var(--color-primary-deep);margin-bottom:8px">Заявка отправлена!</div>
+              <div style="font-size:0.9375rem;color:var(--color-text-secondary)">Мы свяжемся с вами в течение 2 часов</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       FOOTER
+       ══════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo">TA<span>-VAT</span></div>
+          <p class="footer-tagline">Профессиональный бухгалтерский и налоговый аутсорсинг для предпринимателей и компаний в Узбекистане.</p>
+          <div class="footer-insurance">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Ответственность застрахована на 1 млрд сум
+          </div>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Услуги</div>
+          <ul class="footer-links">
+            <li><a href="#services">Бухгалтерский учёт</a></li>
+            <li><a href="#services">Налоговая отчётность</a></li>
+            <li><a href="#services">Налоговая оптимизация</a></li>
+            <li><a href="#services">Обучение бухгалтеров</a></li>
+            <li><a href="#services">Консультации</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Компания</div>
+          <ul class="footer-links">
+            <li><a href="#about">О нас</a></li>
+            <li><a href="#pricing">Тарифы</a></li>
+            <li><a href="#process">Как работаем</a></li>
+            <li><a href="https://t.me/tavat_info" target="_blank" rel="noopener">Telegram-канал</a></li>
+            <li><a href="https://youtube.com/@TAVAT.consulting" target="_blank" rel="noopener">YouTube</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Контакты</div>
+          <div class="footer-contact-item">
+            <svg class="footer-contact-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.6a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 3h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 10.9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17.92z"/></svg>
+            <a href="tel:+998909914039">+998 90 991-40-39</a>
+          </div>
+          <div class="footer-contact-item">
+            <svg class="footer-contact-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <a href="mailto:info@tavat.uz">info@tavat.uz</a>
+          </div>
+          <div class="footer-contact-item">
+            <svg class="footer-contact-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <a href="#">Ташкент, Узбекистан</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-copy">© 2026 TA-VAT Consulting. Все права защищены.</div>
+        <div class="footer-bottom-links">
+          <a href="#">Политика конфиденциальности</a>
+          <a href="#">Публичная оферта</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll to top -->
+  <button class="scroll-top" id="scroll-top" aria-label="Наверх" onclick="scrollToTop()">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+
+  <script>
+    // Nav scroll effect
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+      document.getElementById('scroll-top').classList.toggle('visible', window.scrollY > 400);
+    }, { passive: true });
+
+    // Burger menu
+    const burger = document.getElementById('burger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    burger.addEventListener('click', () => {
+      burger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        burger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+      });
+    });
+
+    // Active nav link on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+    sections.forEach(s => observer.observe(s));
+
+    // Fade-up on scroll
+    const fadeEls = document.querySelectorAll('.fade-up');
+    const fadeObs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          fadeObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    fadeEls.forEach(el => fadeObs.observe(el));
+
+    // Scroll to top
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Form submit mock
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submit-btn');
+      btn.textContent = 'Отправка...';
+      btn.disabled = true;
+      setTimeout(() => {
+        e.target.style.display = 'none';
+        document.getElementById('form-success').style.display = 'block';
+      }, 1200);
+    }
+  </script>
+
+</body>
+</html>
